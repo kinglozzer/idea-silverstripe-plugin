@@ -1,0 +1,48 @@
+<idea-plugin>
+    <id>com.kinglozzer.silverstripe</id>
+    <name>Silverstripe Template Language Support</name>
+    <vendor email="kinglozzer@gmail.com">Loz Calver</vendor>
+
+    <description><![CDATA[
+      <a href="https://www.silverstripe.org/">Silverstripe</a> template language support. WIP.
+    ]]>
+    </description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+
+    <actions>
+        <action id="Silverstripe.NewFile" class="com.kinglozzer.silverstripe.CreateSilverstripeTemplateAction">
+            <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFromTemplate"/>
+        </action>
+    </actions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <internalFileTemplate name="Silverstripe Template"/>
+        <fileType name="Silverstripe" implementationClass="com.kinglozzer.silverstripe.SilverstripeFileType" fieldName="INSTANCE" language="Silverstripe" extensions="ss"/>
+
+        <lang.fileViewProviderFactory language="Silverstripe" implementationClass="com.kinglozzer.silverstripe.files.SilverstripeFileViewProviderFactory"/>
+        <lang.formatter language="Silverstripe" implementationClass="com.kinglozzer.silverstripe.format.SilverstripeFormattingModelBuilder"/>
+        <lang.braceMatcher language="Silverstripe" implementationClass="com.kinglozzer.silverstripe.ide.braces.SilverstripeBraceMatcher"/>
+        <lang.foldingBuilder language="Silverstripe" implementationClass="com.kinglozzer.silverstripe.ide.folding.SilverstripeFoldingBuilder"/>
+        <lang.commenter language="Silverstripe" implementationClass="com.kinglozzer.silverstripe.ide.comments.SilverstripeCommenter"/>
+        <lang.parserDefinition language="Silverstripe" implementationClass="com.kinglozzer.silverstripe.parser.SilverstripeParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="Silverstripe" implementationClass="com.kinglozzer.silverstripe.ide.highlighting.SilverstripeSyntaxHighlighterFactory"/>
+
+        <enterHandlerDelegate implementation="com.kinglozzer.silverstripe.ide.actions.SilverstripeEnterHandler"/>
+        <typedHandler implementation="com.kinglozzer.silverstripe.ide.actions.SilverstripeTypedHandler"/>
+
+        <annotator language="Silverstripe" implementationClass="com.kinglozzer.silverstripe.inspections.SilverstripeIncludeAnnotator"/>
+        <annotator language="Silverstripe" implementationClass="com.kinglozzer.silverstripe.inspections.SilverstripeTranslationAnnotator"/>
+        <annotator language="Silverstripe" implementationClass="com.kinglozzer.silverstripe.inspections.SilverstripeLookupAnnotator"/>
+        <annotator language="Silverstripe" implementationClass="com.kinglozzer.silverstripe.inspections.SilverstripeBlockAnnotator"/>
+
+        <psi.referenceContributor language="Silverstripe" implementation="com.kinglozzer.silverstripe.psi.references.SilverstripeReferenceContributor"/>
+
+        <completion.contributor language="Silverstripe" implementationClass="com.kinglozzer.silverstripe.ide.completions.SilverstripeBlockCompletionContributor"/>
+        <completion.contributor language="Silverstripe" implementationClass="com.kinglozzer.silverstripe.ide.completions.SilverstripeIncludeCompletionContributor"/>
+
+        <editorHighlighterProvider filetype="Silverstripe" implementationClass="com.kinglozzer.silverstripe.ide.highlighting.SilverstripeEditorHighlighterProvider"/>
+        <colorSettingsPage implementation="com.kinglozzer.silverstripe.ide.highlighting.SilverstripeColorSettingsPage"/>
+    </extensions>
+</idea-plugin>

@@ -1,0 +1,65 @@
+package com.kinglozzer.silverstripe.util;
+
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.search.FileTypeIndex;
+import com.kinglozzer.silverstripe.SilverstripeFileType;
+import com.kinglozzer.silverstripe.psi.SilverstripePsiFile;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import static com.intellij.psi.search.GlobalSearchScope.allScope;
+
+public class SilverstripeFileUtil {
+    /**
+     * todo - this should really be cached somewhere instead of querying the virtual filesystem every time
+     */
+    public static List<SilverstripePsiFile> findIncludeTemplate(Project project, String key) {
+        List<SilverstripePsiFile> result = new ArrayList<>();
+        if (key.equals("")) {
+            return result;
+        }
+
+        List<SilverstripePsiFile> files = findValidTemplates(project);
+
+        key = "/" + key;
+        for (SilverstripePsiFile file : files) {
+            String url = file.getVirtualFile().getUrl();
+            String[] templatePathFragments = url.split("/templates", 2);
+            if (templatePathFragments.length < 2) {
+                continue;
+            }
+
+            String templatePath = templatePathFragments[1];
+            // In SS4, we have to make sure the entire path matches. In SS3, just the file name matching is enough
+            if (SilverstripeVersionUtil.isSilverstripe4OrMore(project)) {
+                if (templatePath.equals(key)) {
+                    result.add(file);
+                }
+            } else if (templatePath.endsWith(key)) {
+                result.add(file);
+            }
+        }
+
+        return result;
+    }
+
+    public static List<SilverstripePsiFile> findValidTemplates(Project project) {
+        final List<SilverstripePsiFile> result = new ArrayList<>();
+        final Collection<VirtualFile> files = FileTypeIndex.getFiles(SilverstripeFileType.INSTANCE, allScope(project));
+        for (VirtualFile file : files) {
+            if (file.getUrl().contains("/templates/")) {
+                SilverstripePsiFile template = (SilverstripePsiFile) PsiManager.getInstance(project).findFile(file);
+                if (template != null) {
+                    Collections.addAll(result, template);
+                }
+            }
+        }
+
+        return result;
+    }
+}
