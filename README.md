@@ -9,6 +9,7 @@ This plugin adds Silverstripe template support to PHPStorm and other JetBrains I
 Until the plugin is ready for a stable release and is available on the JetBrains plugin marketplace, it must be
 installed from disk:
 
+- Disable the existing Silverstripe plugin if you have it installed
 - Download the latest release from [the releases page](https://github.com/kinglozzer/idea-silverstripe-plugin/releases)
 - Open the plugins menu in your IDE
 - Open the options menu (`⋮` in PHPStorm)
