@@ -4,6 +4,10 @@
 
 This plugin adds Silverstripe template support to PHPStorm and other JetBrains IDEs.
 
+## PHPStorm Requirements
+
+This plugin requires PHPStorm to be running version 2020.3 or greater.
+
 ### Installation
 
 Until the plugin is ready for a stable release and is available on the JetBrains plugin marketplace, it must be
