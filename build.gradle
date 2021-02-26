@@ -31,7 +31,9 @@ intellij {
 }
 
 test {
-    useJUnitPlatform()
+    testLogging {
+        exceptionFormat = 'full'
+    }
 }
 
 tasks {

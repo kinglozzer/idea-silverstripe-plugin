@@ -1,0 +1,1 @@
+<%t App\Model\Foo.Bar 'Some {var} and {another}' var=$Value another='foo' is 'A description' %>

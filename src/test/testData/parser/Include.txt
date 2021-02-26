@@ -1,0 +1,10 @@
+FILE
+  SilverstripePsiElementImpl([Ss] SS_STATEMENTS)
+    SilverstripeIncludeImpl([Ss] SS_INCLUDE_STATEMENT)
+      PsiElement(SS_BLOCK_START)('<%')
+      PsiWhiteSpace(' ')
+      PsiElement(SS_INCLUDE_KEYWORD)('include')
+      PsiWhiteSpace(' ')
+      PsiElement(SS_INCLUDE_FILE)('IncludeName')
+      PsiWhiteSpace(' ')
+      PsiElement(SS_BLOCK_END)('%>')

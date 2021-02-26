@@ -1,0 +1,7 @@
+FILE
+  SilverstripePsiElementImpl([Ss] SS_STATEMENTS)
+    PsiElement(SS_LEFT_BRACE)('{')
+    SilverstripePsiElementImpl([Ss] SS_LOOKUP)
+      SilverstripeLookupStepImpl([Ss] SS_LOOKUP_STEP)
+        PsiElement([Ss] SS_LOOKUP)('$Lookup')
+    PsiElement(SS_RIGHT_BRACE)('}')

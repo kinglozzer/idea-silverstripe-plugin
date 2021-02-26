@@ -1,0 +1,1 @@
+<% require themedCSS('dist/style') %>

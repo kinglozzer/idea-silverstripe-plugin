@@ -1,0 +1,3 @@
+<%--
+some block comment
+--%>

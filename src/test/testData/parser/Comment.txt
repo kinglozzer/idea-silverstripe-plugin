@@ -1,0 +1,6 @@
+FILE
+  SilverstripePsiElementImpl([Ss] SS_STATEMENTS)
+    SilverstripePsiElementImpl([Ss] SS_COMMENT_STATEMENT)
+      PsiElement(SS_COMMENT_START)('<%--')
+      PsiComment(SS_COMMENT)('\nsome block comment\n')
+      PsiElement(SS_COMMENT_END)('--%>')
