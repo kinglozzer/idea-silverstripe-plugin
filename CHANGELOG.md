@@ -10,6 +10,12 @@
 ### Removed
 
 ### Fixed
+## [0.1.0]
+### Added
+- Live templates for code completion/surrounding
+
+### Fixed
+- Issues with include statements/references triggering exceptions
 ## [0.0.2]
 
 ### Fixed
