@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templateSet group="Silverstripe Template">
+    <!--
+        Based on the live templates originally contributed by Pawel Kozlowski
+        https://github.com/raket/idea-silverstripe/commit/4e13c91cbadf5aaa600aaf437e322cc56cc27d00
+    -->
+    <template name="if" value="&#60;&#37; if $$$ifVar$ &#37;&#62;&#10;$END$&#10;&#60;&#37; end_if &#37;&#62;" description="An if block" toReformat="true" toShortenFQNames="true">
+        <variable name="ifVar" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Silverstripe HTML" value="true" />
+        </context>
+    </template>
+    <template name="elseif" value="&#60;&#37; else_if $$$ifVar$ &#37;&#62;&#10;$END$" description="An else_if tag" toReformat="true" toShortenFQNames="true">
+        <variable name="ifVar" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Silverstripe HTML" value="true" />
+        </context>
+    </template>
+    <template name="else" value="&#60;&#37; else &#37;&#62;" description="An else tag" toReformat="true" toShortenFQNames="true">
+        <context>
+            <option name="Silverstripe HTML" value="true" />
+        </context>
+    </template>
+    <template name="with" value="&#60;&#37; with $$$withVar$ &#37;&#62;&#10;$END$&#10;&#60;&#37; end_with &#37;&#62;" description="A with block" toReformat="true" toShortenFQNames="true">
+        <variable name="withVar" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Silverstripe HTML" value="true" />
+        </context>
+    </template>
+    <template name="loop" value="&#60;&#37; loop $$$loopVar$ &#37;&#62;&#10;$END$&#10;&#60;&#37; end_loop &#37;&#62;" description="A loop block" toReformat="true" toShortenFQNames="true">
+        <variable name="loopVar" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Silverstripe HTML" value="true" />
+        </context>
+    </template>
+    <template name="cached" value="&#60;&#37; cached $$$cachedVar$ &#37;&#62;&#10;$END$&#10;&#60;&#37; end_cached &#37;&#62;" description="A cached block" toReformat="true" toShortenFQNames="true">
+        <variable name="cachedVar" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Silverstripe HTML" value="true" />
+        </context>
+    </template>
+    <template name="inc" value="&#60;&#37; include $includeName$ &#37;&#62;$END$" description="An include statement" toReformat="true" toShortenFQNames="true">
+        <variable name="includeName" expression="complete()" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Silverstripe HTML" value="true" />
+        </context>
+    </template>
+    <template name="reqcss" value="&#60;&#37; require themedCSS('$incFile$') &#37;&#62;" description="Require themed CSS file" toReformat="true" toShortenFQNames="true">
+        <variable name="incFile" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Silverstripe HTML" value="true" />
+        </context>
+    </template>
+    <template name="reqjs" value="&#60;&#37; require themedJavascript('$incFile$') &#37;&#62;" description="Require themed Javascript file" toReformat="true" toShortenFQNames="true">
+        <variable name="incFile" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Silverstripe HTML" value="true" />
+        </context>
+    </template>
+    <template name="base" value="&#60;&#37; base_tag &#37;&#62;" description="An HTML base tag" toReformat="true" toShortenFQNames="true">
+        <context>
+            <option name="Silverstripe HTML" value="true" />
+        </context>
+    </template>
+    <template name="_t" value="&#60;&#37;t $identifier$ '$string$' &#37;&#62;" description="A translation statement" toReformat="true" toShortenFQNames="true">
+        <variable name="identifier" expression="" defaultValue="" alwaysStopAt="true" />
+        <variable name="string" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Silverstripe HTML" value="true" />
+        </context>
+    </template>
+
+    <template name="if" value="&#60;&#37; if $$$ifVar$ &#37;&#62;&#10;$SELECTION$&#10;&#60;&#37; end_if &#37;&#62;" description="Surround with if statement" toReformat="true" toShortenFQNames="true">
+        <variable name="ifVar" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Silverstripe" value="true" />
+        </context>
+    </template>
+    <template name="with" value="&#60;&#37; with $$$withVar$ &#37;&#62;&#10;$SELECTION$&#10;&#60;&#37; end_with &#37;&#62;" description="Surround with 'with' statement" toReformat="true" toShortenFQNames="true">
+        <variable name="withVar" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Silverstripe" value="true" />
+        </context>
+    </template>
+    <template name="loop" value="&#60;&#37; loop $$$loopVar$ &#37;&#62;&#10;$SELECTION$&#10;&#60;&#37; end_loop &#37;&#62;" description="Surround with loop statement" toReformat="true" toShortenFQNames="true">
+        <variable name="loopVar" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Silverstripe" value="true" />
+        </context>
+    </template>
+    <template name="cached" value="&#60;&#37; cached $$$cachedVar$ &#37;&#62;&#10;$SELECTION$&#10;&#60;&#37; end_cached &#37;&#62;" description="Surround with cached statement" toReformat="true" toShortenFQNames="true">
+        <variable name="cachedVar" expression="" defaultValue="" alwaysStopAt="true" />
+        <context>
+            <option name="Silverstripe" value="true" />
+        </context>
+    </template>
+</templateSet>

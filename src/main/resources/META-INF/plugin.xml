@@ -44,5 +44,9 @@
 
         <editorHighlighterProvider filetype="Silverstripe" implementationClass="com.kinglozzer.silverstripe.ide.highlighting.SilverstripeEditorHighlighterProvider"/>
         <colorSettingsPage implementation="com.kinglozzer.silverstripe.ide.highlighting.SilverstripeColorSettingsPage"/>
+
+        <liveTemplateContext implementation="com.kinglozzer.silverstripe.ide.templates.SilverstripeContextType"/>
+        <liveTemplateContext implementation="com.kinglozzer.silverstripe.ide.templates.SilverstripeHTMLContextType"/>
+        <defaultLiveTemplates file="liveTemplates/Silverstripe"/>
     </extensions>
 </idea-plugin>
