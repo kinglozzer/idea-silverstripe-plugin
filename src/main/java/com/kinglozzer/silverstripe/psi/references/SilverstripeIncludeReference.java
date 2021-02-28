@@ -48,8 +48,7 @@ public class SilverstripeIncludeReference extends PsiReferenceBase<PsiElement> i
     public TextRange getRangeInElement() {
         SilverstripeIncludeImpl includeElement = (SilverstripeIncludeImpl) this.getElement();
         ASTNode includeFileNode = includeElement.getIncludeFileNode();
-        return new TextRange(includeFileNode.getPsi().getStartOffsetInParent(),
-            includeFileNode.getPsi().getStartOffsetInParent() + includeFileNode.getPsi().getTextLength());
+        return includeFileNode.getPsi().getTextRange();
     }
 
     @NotNull

@@ -11,6 +11,9 @@ public class SilverstripeIncludeReferenceProvider extends PsiReferenceProvider {
     @Override
     public PsiReference @NotNull [] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
         SilverstripeIncludeImpl includeElement = (SilverstripeIncludeImpl) element;
+        if (includeElement.getIncludeFileNode() == null) {
+            return PsiReference.EMPTY_ARRAY;
+        }
         return new PsiReference[]{new SilverstripeIncludeReference(includeElement, includeElement.getReferenceTextRange())};
     }
 }
