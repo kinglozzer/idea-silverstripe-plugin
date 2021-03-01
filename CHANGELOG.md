@@ -10,6 +10,14 @@
 ### Removed
 
 ### Fixed
+## [0.2.0]
+### Added
+- Support for renaming/moving include files (auto-update references)
+
+### Fixed
+- Broken click to navigate to include
+- Stale references to includes when include statement is changed
+
 ## [0.1.0]
 ### Added
 - Live templates for code completion/surrounding
