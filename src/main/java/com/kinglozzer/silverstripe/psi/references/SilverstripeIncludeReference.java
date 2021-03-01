@@ -1,6 +1,7 @@
 package com.kinglozzer.silverstripe.psi.references;
 
 import com.intellij.lang.ASTNode;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.*;
@@ -48,7 +49,11 @@ public class SilverstripeIncludeReference extends PsiReferenceBase<PsiElement> i
     public TextRange getRangeInElement() {
         SilverstripeIncludeImpl includeElement = (SilverstripeIncludeImpl) this.getElement();
         ASTNode includeFileNode = includeElement.getIncludeFileNode();
-        return includeFileNode.getPsi().getTextRange();
+        if (includeFileNode.getTreeParent() == null) {
+            return new TextRange(0, 0);
+        }
+
+        return includeFileNode.getPsi().getTextRangeInParent();
     }
 
     @NotNull
