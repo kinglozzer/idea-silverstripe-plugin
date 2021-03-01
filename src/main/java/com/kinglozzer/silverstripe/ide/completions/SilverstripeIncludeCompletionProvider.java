@@ -29,8 +29,11 @@ public class SilverstripeIncludeCompletionProvider extends CompletionProvider<Co
                 if (templatePathFragments.length < 2) {
                     continue;
                 }
+                templateName = templatePathFragments[1];
+                // Remove leading "Includes/" as it's redundant
+                templateName = templateName.replaceAll("^(?i)Includes/", "");
                 // todo - this is a bit opinionated. Should be configurable: single/double backslash or forward slash
-                templateName = templatePathFragments[1].replaceAll("/", "\\\\");
+                templateName = templateName.replaceAll("/", "\\\\");
             } else {
                 templateName = file.getName();
             }

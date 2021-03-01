@@ -2,6 +2,7 @@ package com.kinglozzer.silverstripe.psi.impl;
 
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiNameIdentifierOwner;
@@ -14,27 +15,31 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class SilverstripeIncludeImpl extends ASTWrapperPsiElement implements PsiNameIdentifierOwner {
-    ASTNode includeFileNode;
-    String myName = "";
+    String myName;
 
     public SilverstripeIncludeImpl(@NotNull ASTNode node) {
         super(node);
-
-        includeFileNode = node.findChildByType(SilverstripeTokenTypes.SS_INCLUDE_FILE);
-        if (includeFileNode != null) {
-            myName = includeFileNode.getText();
-        }
     }
 
     @Nullable
     @Override
     public PsiElement getNameIdentifier() {
-        return includeFileNode != null ? includeFileNode.getPsi() : null;
+        ASTNode includeFileNode = getNode().findChildByType(SilverstripeTokenTypes.SS_INCLUDE_FILE);
+        if (includeFileNode == null) {
+            return null;
+        }
+
+        return includeFileNode.getPsi();
     }
 
     @NotNull
     public String getName() {
-        return myName;
+        ASTNode includeFileNode = getNode().findChildByType(SilverstripeTokenTypes.SS_INCLUDE_FILE);
+        if (includeFileNode != null) {
+            return includeFileNode.getText();
+        }
+
+        return "";
     }
 
     @Override
@@ -60,6 +65,6 @@ public class SilverstripeIncludeImpl extends ASTWrapperPsiElement implements Psi
     }
 
     public ASTNode getIncludeFileNode() {
-        return includeFileNode;
+        return getNode().findChildByType(SilverstripeTokenTypes.SS_INCLUDE_FILE);
     }
 }
