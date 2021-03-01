@@ -1,13 +1,14 @@
 package com.kinglozzer.silverstripe.psi.references;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.*;
+import com.intellij.util.IncorrectOperationException;
 import com.kinglozzer.silverstripe.psi.SilverstripePsiFile;
 import com.kinglozzer.silverstripe.psi.impl.SilverstripeIncludeImpl;
 import com.kinglozzer.silverstripe.util.SilverstripeFileUtil;
+import com.kinglozzer.silverstripe.util.SilverstripeVersionUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -60,5 +61,32 @@ public class SilverstripeIncludeReference extends PsiReferenceBase<PsiElement> i
     @Override
     public Object @NotNull [] getVariants() {
         return EMPTY_ARRAY;
+    }
+
+    @Override
+    public PsiElement handleElementRename(@NotNull String newElementName) throws IncorrectOperationException {
+        SilverstripeIncludeImpl includeElement = (SilverstripeIncludeImpl) this.getElement();
+        String current = includeElement.getIncludeFileNode().getText();
+        String newName = current.replaceAll("([/\\\\])*([^/\\\\]+)$", "$1" + newElementName);
+        return includeElement.setName(newName);
+    }
+
+    @Override
+    public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException {
+        String url = element.getContainingFile().getVirtualFile().getUrl();
+        String[] templatePathFragments = url.split("/templates", 2);
+        if (templatePathFragments.length < 2) {
+            return myElement;
+        }
+
+        SilverstripeIncludeImpl includeElement = (SilverstripeIncludeImpl) this.getElement();
+        if (SilverstripeVersionUtil.isSilverstripe4OrMore(element.getProject())) {
+            includeElement.setName(templatePathFragments[1].replaceAll("^/+", ""));
+        } else {
+            int lastSlash = templatePathFragments[1].lastIndexOf("/");
+            includeElement.setName(templatePathFragments[1].substring(lastSlash + 1));
+        }
+
+        return myElement;
     }
 }

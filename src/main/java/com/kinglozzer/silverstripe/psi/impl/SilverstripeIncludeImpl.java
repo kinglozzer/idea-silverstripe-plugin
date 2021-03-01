@@ -2,7 +2,6 @@ package com.kinglozzer.silverstripe.psi.impl;
 
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiNameIdentifierOwner;
@@ -10,13 +9,12 @@ import com.intellij.psi.PsiReference;
 import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
 import com.intellij.util.IncorrectOperationException;
 import com.kinglozzer.silverstripe.parser.SilverstripeTokenTypes;
+import com.kinglozzer.silverstripe.util.SilverstripePsiUtil;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class SilverstripeIncludeImpl extends ASTWrapperPsiElement implements PsiNameIdentifierOwner {
-    String myName;
-
     public SilverstripeIncludeImpl(@NotNull ASTNode node) {
         super(node);
     }
@@ -44,7 +42,12 @@ public class SilverstripeIncludeImpl extends ASTWrapperPsiElement implements Psi
 
     @Override
     public PsiElement setName(@NonNls @NotNull String name) throws IncorrectOperationException {
-        myName = name;
+        ASTNode includeFileNode = getNode().findChildByType(SilverstripeTokenTypes.SS_INCLUDE_FILE);
+        if (includeFileNode != null) {
+            final PsiElement newElement = SilverstripePsiUtil.createIncludeFileElement(name, getProject());
+            includeFileNode.getPsi().replace(newElement);
+        }
+
         return this;
     }
 
