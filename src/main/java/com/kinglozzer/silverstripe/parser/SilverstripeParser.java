@@ -6,14 +6,17 @@ import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.lang.PsiParser;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
-import com.intellij.util.containers.Stack;
 import com.kinglozzer.silverstripe.SilverstripeBundle;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Stack;
+
 import static com.kinglozzer.silverstripe.parser.SilverstripeTokenTypes.*;
 
 public class SilverstripeParser implements PsiParser {
+    // todo -rename to closed block stack
+    private static final Stack<String> openBlockStack = new Stack<>();
     private static final Stack<String> blockStack = new Stack<>();
 
     @Override
@@ -72,23 +75,44 @@ public class SilverstripeParser implements PsiParser {
         IElementType tokenType = builder.getTokenType();
 
         if (tokenType == SS_BLOCK_START) {
+            // todo - if we parse an end statement at this point, it's unexpected
+
             // Parse closed blocks (e.g. include / require)
             if (parseClosedBlock(builder)) {
                 return true;
             }
 
-            // Parse an open block start statement - e.g. if, loop, with
-            Marker blockMarker = builder.mark();
+            // Parse an open block start statement for blocks that are known open blocks - e.g. if, loop, with
+            Marker openBlockMarker = builder.mark();
             if (parseOpenBlockStartStatement(builder)) {
                 // Kick off nested statement parsing for the body of the statement
                 parseNestedOpenBlockStatements(builder);
                 // Nested parsing has now ended, so look for a closing statement
                 if (parseOpenBlockEndStatement(builder, true)) {
-                    blockStack.pop();
+                    openBlockStack.pop();
+                    openBlockMarker.done(SS_BLOCK_STATEMENT);
+                } else {
+                    openBlockMarker.done(SS_UNFINISHED_BLOCK_STATEMENT);
+                }
+                return true;
+            }
+            openBlockMarker.rollbackTo();
+
+            Marker blockMarker = builder.mark();
+            if (parseBlockStatement(builder)) {
+                // Kick off nested statement parsing as this may be an open block
+                parseNestedOpenBlockStatements(builder);
+                // Nested parsing has now ended, so look for a closing statement in case this was an open block
+                Marker blockEndMarker = builder.mark();
+                if (parseBlockEndStatement(builder, true)) {
+                    blockEndMarker.drop();
                     blockMarker.done(SS_BLOCK_STATEMENT);
                 } else {
-                    blockMarker.done(SS_UNFINISHED_BLOCK_STATEMENT);
+                    blockEndMarker.rollbackTo();
+                    blockMarker.drop();
                 }
+
+                blockStack.pop();
                 return true;
             }
             blockMarker.rollbackTo();
@@ -189,8 +213,33 @@ public class SilverstripeParser implements PsiParser {
         IElementType tokenType = builder.getTokenType();
 
         if (tokenType == SS_BLOCK_START) {
+            //
+            // GENERIC CLOSED BLOCK STATEMENTS
+            //
             // If we encounter an unexpected end block (i.e. mismatched), ignore it and carry on parsing - we let
             // annotators handle highlighting it as an error
+            Marker unexpectedBlockEndMarker = builder.mark();
+            if (parseBlockEndStatement(builder, false)) {
+                unexpectedBlockEndMarker.rollbackTo();
+                return false;
+            }
+            unexpectedBlockEndMarker.drop();
+
+            // If we encounter an end block we're expecting, roll back to before it and jump out of the nested parsing
+            // loop - parseOpenBlockEndStatement() in the non-nested parseStatement() should take over from here
+            Marker blockEndMarker = builder.mark();
+            if (parseBlockEndStatement(builder, true)) {
+                blockEndMarker.rollbackTo();
+                return false;
+            }
+            blockEndMarker.drop();
+
+            //
+            // KNOWN CLOSED BLOCK STATEMENTS
+            //
+            // If we encounter an unexpected end block (i.e. mismatched), ignore it and carry on parsing - we let
+            // annotators handle highlighting it as an error
+            // todo - rename to closed block
             Marker unexpectedEndBlockMarker = builder.mark();
             if (parseOpenBlockEndStatement(builder, false)) {
                 unexpectedEndBlockMarker.drop();
@@ -200,6 +249,7 @@ public class SilverstripeParser implements PsiParser {
 
             // If we encounter an end block we're expecting, roll back to before it and jump out of the nested parsing
             // loop - parseOpenBlockEndStatement() in the non-nested parseStatement() should take over from here
+            // todo - rename to closed block
             Marker openBlockEndMarker = builder.mark();
             if (parseOpenBlockEndStatement(builder, true)) {
                 openBlockEndMarker.rollbackTo();
@@ -212,7 +262,7 @@ public class SilverstripeParser implements PsiParser {
             // take over from here
             Marker continuationMarker = builder.mark();
             if (parseOpenBlockContinuationStatement(builder)) {
-                blockStack.pop();
+                openBlockStack.pop();
                 continuationMarker.rollbackTo();
                 return false;
             }
@@ -243,8 +293,8 @@ public class SilverstripeParser implements PsiParser {
         Marker statementMarker = builder.mark();
         consumeToken(builder, SS_BLOCK_START);
 
-        if (blockStack.isEmpty() // todo - intentionally split over 2 lines to aid debugging a very intermittent exception
-            || !blockStack.peek().equals("if")) {
+        if (openBlockStack.isEmpty() // todo - intentionally split over 2 lines to aid debugging a very intermittent exception
+            || !openBlockStack.peek().equals("if")) {
             statementMarker.rollbackTo();
             return false;
         }
@@ -373,7 +423,7 @@ public class SilverstripeParser implements PsiParser {
         String text = builder.getTokenText() != null ? builder.getTokenText().toLowerCase() : "";
         if (consumeToken(builder, SS_IF_KEYWORD)) {
             ifStatementMarker.drop();
-            blockStack.push(text);
+            openBlockStack.push(text);
             return SS_IF_STATEMENT;
         } else {
             ifStatementMarker.rollbackTo();
@@ -382,7 +432,7 @@ public class SilverstripeParser implements PsiParser {
         Marker elseIfStatementMarker = builder.mark();
         if (consumeToken(builder, SS_ELSE_IF_KEYWORD)) {
             elseIfStatementMarker.drop();
-            blockStack.push("if");
+            openBlockStack.push("if");
             return SS_ELSE_IF_STATEMENT;
         } else {
             elseIfStatementMarker.rollbackTo();
@@ -391,7 +441,7 @@ public class SilverstripeParser implements PsiParser {
         Marker elseStatementMarker = builder.mark();
         if (consumeToken(builder, SS_ELSE_KEYWORD)) {
             elseStatementMarker.drop();
-            blockStack.push("if");
+            openBlockStack.push("if");
             return SS_ELSE_STATEMENT;
         } else {
             elseStatementMarker.rollbackTo();
@@ -400,7 +450,7 @@ public class SilverstripeParser implements PsiParser {
         Marker startStatementMarker = builder.mark();
         if (consumeToken(builder, SS_START_KEYWORD)) {
             startStatementMarker.drop();
-            blockStack.push(text);
+            openBlockStack.push(text);
             return SS_BLOCK_START_STATEMENT;
         } else {
             startStatementMarker.rollbackTo();
@@ -409,7 +459,7 @@ public class SilverstripeParser implements PsiParser {
         Marker cachedStatementMarker = builder.mark();
         if (consumeToken(builder, SS_CACHED_KEYWORD)) {
             cachedStatementMarker.drop();
-            blockStack.push(text);
+            openBlockStack.push(text);
             return SS_CACHED_STATEMENT;
         } else {
             cachedStatementMarker.rollbackTo();
@@ -423,8 +473,8 @@ public class SilverstripeParser implements PsiParser {
         consumeToken(builder, SS_BLOCK_START);
         String text = builder.getTokenText() != null ? builder.getTokenText().toLowerCase() : "";
 
-        if (!blockStack.empty()) {
-            String targetText = "end_" + blockStack.peek();
+        if (!openBlockStack.empty()) {
+            String targetText = "end_" + openBlockStack.peek();
 
             if (matchStack) {
                 // We're looking for an end_ statement that matches what's in the stack
@@ -453,6 +503,80 @@ public class SilverstripeParser implements PsiParser {
 
         endBlockMarker.done(SS_BLOCK_END_STATEMENT);
         return true;
+    }
+
+    private boolean parseBlockStatement(PsiBuilder builder) {
+        Marker startBlockMarker = builder.mark();
+        consumeToken(builder, SS_BLOCK_START);
+
+        Marker blockTypeMarker = builder.mark();
+        String blockType = builder.getTokenText();
+        if (!consumeToken(builder, SS_BLOCK_NAME)) {
+            blockTypeMarker.rollbackTo();
+            return false;
+        }
+
+        blockTypeMarker.done(SS_BLOCK_NAME);
+        blockStack.push(blockType);
+
+        while (!builder.eof()) {
+            IElementType type = builder.getTokenType();
+            if (type == SS_BLOCK_END) {
+                if (builder.getTokenType() == SS_UNFINISHED_BLOCK_STATEMENT) {
+                    builder.advanceLexer();
+                    startBlockMarker.drop();
+                    return false;
+                }
+
+                consumeToken(builder, type);
+                startBlockMarker.done(SS_BLOCK_SIMPLE_STATEMENT);
+                return true;
+            }
+
+            if (!parseStatement(builder)) {
+                builder.advanceLexer();
+                break;
+            }
+        }
+
+        startBlockMarker.rollbackTo();
+        return false;
+    }
+
+    private boolean parseBlockEndStatement(PsiBuilder builder, boolean matchStack) {
+        Marker endBlockMarker = builder.mark();
+        consumeToken(builder, SS_BLOCK_START);
+
+        String text = builder.getTokenText() != null ? builder.getTokenText().toLowerCase() : "";
+        if (!consumeToken(builder, SS_END_KEYWORD)) {
+            endBlockMarker.rollbackTo();
+            return false;
+        }
+
+        String blockName = text.substring(4);
+        if (!blockStack.empty()) {
+            if (matchStack) {
+                // We're looking for an end_ statement that matches what's in the stack
+                if (!blockName.equals(blockStack.peek())) {
+                    endBlockMarker.rollbackTo();
+                    return false;
+                }
+            } else {
+                // We're looking for anything *except* an end_ statement that matches what's in the stack
+                if (blockName.equals(blockStack.peek())) {
+                    endBlockMarker.rollbackTo();
+                    return false;
+                }
+            }
+
+            if (consumeToken(builder, SS_BLOCK_END)) {
+                endBlockMarker.done(SS_BLOCK_END_STATEMENT);
+                return true;
+            }
+        }
+
+        endBlockMarker.rollbackTo();
+        return false;
     }
 
     private boolean parseBadBlockStatement(PsiBuilder builder) {

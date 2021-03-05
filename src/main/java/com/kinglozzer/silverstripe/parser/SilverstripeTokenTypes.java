@@ -16,8 +16,10 @@ public final class SilverstripeTokenTypes {
     public static final IElementType SS_LOOKUP_STEP_ARGS = new SilverstripeElementType("SS_LOOKUP_STEP_ARGS");
 
     // Block wrapper statements
+    // todo - rename to closed block statement
     public static final IElementType SS_BLOCK_STATEMENT = new SilverstripeElementType("SS_BLOCK_STATEMENT");
     public static final IElementType SS_BLOCK_START_STATEMENT = new SilverstripeElementType("SS_BLOCK_START_STATEMENT");
+    // todo - rename to open block statement, or just block statement?
     public static final IElementType SS_BLOCK_SIMPLE_STATEMENT = new SilverstripeElementType("SS_BLOCK_SIMPLE_STATEMENT");
     public static final IElementType SS_BLOCK_END_STATEMENT = new SilverstripeElementType("SS_BLOCK_END_STATEMENT");
     public static final IElementType SS_UNFINISHED_BLOCK_STATEMENT = new SilverstripeElementType("SS_UNFINISHED_BLOCK_STATEMENT");
@@ -44,6 +46,7 @@ public final class SilverstripeTokenTypes {
     public static final IElementType SS_ELSE_IF_KEYWORD = new SilverstripeTokenType("SS_ELSE_IF_KEYWORD");
     public static final IElementType SS_ELSE_KEYWORD = new SilverstripeTokenType("SS_ELSE_KEYWORD");
     public static final IElementType SS_END_KEYWORD = new SilverstripeTokenType("SS_END_KEYWORD");
+    public static final IElementType SS_BLOCK_NAME = new SilverstripeTokenType("SS_BLOCK_NAME");
 
     // Closed block keyword tokens
     public static final IElementType SS_TRANSLATION_KEYWORD = new SilverstripeTokenType("SS_TRANSLATION_KEYWORD");

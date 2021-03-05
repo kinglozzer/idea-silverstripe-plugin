@@ -63,7 +63,7 @@ SS_INCLUDE_KEYWORD= include
 SS_INCLUDE_FILE= [a-zA-Z_\\\/]+([a-zA-Z0-9_\\\/])*
 SS_REQUIRE_KEYWORD= require
 SS_CACHED_KEYWORD= cached
-SS_END_KEYWORD= end_loop | end_if | end_with | end_cached
+SS_END_KEYWORD= end_{SS_IDENTIFIER}
 SS_COMMENT_START= <%--
 SS_COMMENT_END= --%>
 SS_TRANSLATION_START= <%t
@@ -147,6 +147,7 @@ SS_TEXT= (([^<${\\]+) | (\\.) | (<[^%]) | (\$[^A-Za-z_]) | (\{[^\$]) | (\{\$[^A-
     {SS_ELSE_IF_KEYWORD}                { yypushstate(SS_IF_STATEMENT); return SilverstripeTokenTypes.SS_ELSE_IF_KEYWORD; }
     {SS_ELSE_KEYWORD}                   { return SilverstripeTokenTypes.SS_ELSE_KEYWORD; }
     {SS_END_KEYWORD}                    { return SilverstripeTokenTypes.SS_END_KEYWORD; }
+    {SS_IDENTIFIER}                     { yypushstate(SS_BLOCK_STATEMENT); return SilverstripeTokenTypes.SS_BLOCK_NAME; }
     {SS_COMMENT_END}                    { yypopstate(); return SilverstripeTokenTypes.SS_COMMENT_END; }
     {SS_BLOCK_END}                      { yypopstate(); return SilverstripeTokenTypes.SS_BLOCK_END; }
     {WHITE_SPACE}+                      { return TokenType.WHITE_SPACE; }

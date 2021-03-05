@@ -103,6 +103,7 @@ public class SilverstripeSyntaxHighlighter extends SyntaxHighlighterBase {
         SilverstripeTokenTypes.SS_CACHED_KEYWORD,
         SilverstripeTokenTypes.SS_REQUIRE_KEYWORD,
         SilverstripeTokenTypes.SS_TRANSLATION_KEYWORD,
+        SilverstripeTokenTypes.SS_BLOCK_NAME,
         SilverstripeTokenTypes.SS_IS_KEYWORD
     );
 
