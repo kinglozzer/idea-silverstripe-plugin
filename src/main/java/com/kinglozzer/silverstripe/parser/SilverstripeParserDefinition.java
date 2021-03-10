@@ -25,7 +25,7 @@ public class SilverstripeParserDefinition implements ParserDefinition {
     @Override
     @NotNull
     public Lexer createLexer(Project project) {
-        return new SilverstripeLexer();
+        return new SilverstripeMergingLexer();
     }
 
     @Override

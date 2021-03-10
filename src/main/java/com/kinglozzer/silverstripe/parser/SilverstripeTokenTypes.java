@@ -76,7 +76,6 @@ public final class SilverstripeTokenTypes {
     public static final IElementType SS_STRING = new SilverstripeTokenType("SS_STRING");
     public static final IElementType SS_NUMBER = new SilverstripeTokenType("SS_NUMBER");
     public static final IElementType SS_PRIMITIVE = new SilverstripeTokenType("SS_PRIMITIVE");
-    public static final IElementType SS_THEME_DIR = new SilverstripeTokenType("SS_THEME_DIR");
     public static final IElementType SS_DOT = new SilverstripeTokenType("SS_DOT");
     public static final IElementType SS_COMMA = new SilverstripeTokenType("SS_COMMA");
     public static final IElementType SS_IDENTIFIER = new SilverstripeTokenType("SS_IDENTIFIER");

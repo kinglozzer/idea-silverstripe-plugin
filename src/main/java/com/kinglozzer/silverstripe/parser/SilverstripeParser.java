@@ -155,11 +155,6 @@ public class SilverstripeParser implements PsiParser {
             return true;
         }
 
-        if (tokenType == SS_THEME_DIR) {
-            builder.advanceLexer();
-            return true;
-        }
-
         if (tokenType == SS_TRANSLATION_IDENTIFIER || tokenType == SS_IS_KEYWORD) {
             builder.advanceLexer();
             return true;

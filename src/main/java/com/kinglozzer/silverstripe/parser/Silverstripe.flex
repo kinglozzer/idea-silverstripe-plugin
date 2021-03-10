@@ -227,8 +227,10 @@ SS_TEXT= (([^<${\\]+) | (\\.) | (<[^%]) | (\$[^A-Za-z_]) | (\{[^\$]) | (\{\$[^A-
 }
 
 <SS_BLOCK_STATEMENT> {
+    ","                                 { return SilverstripeTokenTypes.SS_COMMA; }
     {SS_IDENTIFIER}                     { yypushstate(SS_LOOKUP); return SilverstripeTokenTypes.SS_LOOKUP; }
     {SS_LOOKUP}                         { yypushstate(SS_LOOKUP); return SilverstripeTokenTypes.SS_LOOKUP; }
+    {SS_STRING}                         { return SilverstripeTokenTypes.SS_STRING; }
     {SS_BLOCK_END}                      { yycleanstates(); return SilverstripeTokenTypes.SS_BLOCK_END; }
     {WHITE_SPACE}+                      { return TokenType.WHITE_SPACE; }
     {CRLF}+                             { yypushback(yylength()); yypopstate(); }
@@ -260,8 +262,8 @@ SS_TEXT= (([^<${\\]+) | (\\.) | (<[^%]) | (\$[^A-Za-z_]) | (\{[^\$]) | (\{\$[^A-
 }
 
 <SS_COMMENT> {
-    ~"--%>"                             { yypopstate(); yypushback(4); return SilverstripeTokenTypes.SS_COMMENT; }
-    !([^]*"--%>"[^]*)                   { return SilverstripeTokenTypes.SS_COMMENT; }
+    "--%>"                              { yycleanstates(); return SilverstripeTokenTypes.SS_COMMENT_END; }
+    [^]                                 { return SilverstripeTokenTypes.SS_COMMENT; }
 }
 
 <SS_CACHED_STATEMENT> {
@@ -283,7 +285,6 @@ SS_TEXT= (([^<${\\]+) | (\\.) | (<[^%]) | (\$[^A-Za-z_]) | (\{[^\$]) | (\{\$[^A-
 }
 
 <SS_LOOKUP> {
-    "$ThemeDir"                         { return SilverstripeTokenTypes.SS_THEME_DIR; }
     "."                                 { yypushstate(SS_LOOKUP_STEP); return SilverstripeTokenTypes.SS_DOT; }
     "("                                 { yypushstate(SS_LOOKUP_ARGUMENTS); return SilverstripeTokenTypes.SS_LEFT_PARENTHESIS; }
     {SS_LOOKUP}                         { return SilverstripeTokenTypes.SS_LOOKUP; }
