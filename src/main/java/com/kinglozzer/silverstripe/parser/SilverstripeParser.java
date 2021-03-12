@@ -99,8 +99,10 @@ public class SilverstripeParser implements PsiParser {
 
                 // Nested parsing has now ended, so look for a closing statement
                 // Note that the block stack indexes start at 1, not 0
+                Marker blockEndMarker = builder.mark();
                 int blockPositionInStack = parseClosedBlockEndStatement(builder);
                 if (blockPositionInStack != 0) {
+                    blockEndMarker.drop();
                     // Pop the last block statement marker from the top of the stack
                     Pair<String, Marker> pair = blockStack.pop();
 
@@ -112,17 +114,30 @@ public class SilverstripeParser implements PsiParser {
                     // the "new" top of the stack (in the example above, it will re-parse the end statement for the
                     // outer closed block)
                     if (blockPositionInStack != 1) {
+                        // todo
+                        // is it actually possible to reach this?? if not, we can probably replace the return
+                        // value of parseClosedBlockEndStatement() with a boolean
                         pair.getSecond().drop();
                         return false;
                     }
 
                     // The end statement we found matches what's at the top of the stack so we can complete the block
-                    closedBlockMarker.done(SS_BLOCK_STATEMENT);
+                    if (pair.getSecond() == closedBlockMarker) {
+                        closedBlockMarker.done(SS_BLOCK_STATEMENT);
+                    }
                     return true;
                 }
 
-                // The end statement we found doesn't match anything in the stack, so something is wrong
-                closedBlockMarker.done(SS_UNFINISHED_BLOCK_STATEMENT);
+                // We reach this point when we encounter a closed block end statement, after parsing statements that
+                // follows an unrecognised open block. I.e. an open block inside a closed block - we parse the open
+                // block, then everything that follows in parseStatementsMaybeNestedInClosedBlock() above, and as soon
+                // as we hit the end statement for the parent closed block, we end up here. Roll back to the start of
+                // the end block, drop the closed block marker (as this is an open block) and pop the marker from the
+                // stack now we're finished with this block
+                blockEndMarker.rollbackTo();
+                closedBlockMarker.drop();
+                blockStack.pop();
+
                 return true;
             }
             closedBlockMarker.rollbackTo();
@@ -188,23 +203,27 @@ public class SilverstripeParser implements PsiParser {
 
     private void parseNestedStatements(PsiBuilder builder) {
         Marker statementsMarker = builder.mark();
-        boolean statementsParsed = false;
+        boolean nestedStatementsParsed = false;
 
         // This loop parses statements until either something unknown is encountered, or we intentionally jump out
         while (true) {
             Marker optionalStatementMarker = builder.mark();
 
-            if (parseNestedStatement(builder)) {
+            Pair<Boolean, Boolean> result = parseNestedStatement(builder);
+            boolean shouldContinue = result.getFirst();
+            nestedStatementsParsed = nestedStatementsParsed || result.getSecond();
+
+            if (shouldContinue) {
                 optionalStatementMarker.drop();
-                statementsParsed = true;
             } else {
                 optionalStatementMarker.rollbackTo();
                 break;
             }
         }
 
-        if (statementsParsed) {
-            statementsMarker.done(SS_STATEMENTS);
+        // If the statements parsed are nested (i.e. in a completed closed block), mark them as such
+        if (nestedStatementsParsed) {
+            statementsMarker.done(SS_NESTED_STATEMENTS);
         } else {
             statementsMarker.drop();
         }
@@ -213,8 +232,10 @@ public class SilverstripeParser implements PsiParser {
     /**
      * This adds some extra checks to parseStatement() to cater for occasions when we deliberately want to break out
      * of the nested parsing loop (e.g. when we find an end statement for a closed block)
+     *
+     * @return A pair indicating whether to continue parsing, and whether parsed statements should be marked as nested
      */
-    private boolean parseNestedStatement(PsiBuilder builder) {
+    private Pair<Boolean, Boolean> parseNestedStatement(PsiBuilder builder) {
         IElementType tokenType = builder.getTokenType();
 
         if (tokenType == SS_BLOCK_START) {
@@ -224,7 +245,7 @@ public class SilverstripeParser implements PsiParser {
             int blockPositionInStack = parseClosedBlockEndStatement(builder);
             if (blockPositionInStack != 0) {
                 closedBlockEndMarker.rollbackTo();
-                return false;
+                return new Pair<>(false, true);
             }
             closedBlockEndMarker.drop();
 
@@ -233,20 +254,18 @@ public class SilverstripeParser implements PsiParser {
             // the block as complete
             Marker continuationMarker = builder.mark();
             if (parseElseIfOrElseStatement(builder)) {
-                while (!blockStack.isEmpty()) {
-                    Pair<String, Marker> pair = blockStack.peek();
-                    if (pair.getFirst().equals("if")) {
-                        continuationMarker.rollbackTo();
-                        return false;
-                    }
-
-                    blockStack.pop();
+                continuationMarker.rollbackTo();
+                if (!blockStack.isEmpty() && blockStack.peek().getFirst().equals("if")) {
+                    return new Pair<>(false, true);
                 }
+
+                return new Pair<>(false, false);
             }
             continuationMarker.drop();
         }
 
-        return parseStatement(builder);
+        boolean statementParsed = parseStatement(builder);
+        return new Pair<>(statementParsed, false);
     }
 
     /**
@@ -257,12 +276,20 @@ public class SilverstripeParser implements PsiParser {
 
         // We may have been kicked out of the nested parsing loop by an else_if / else statement.
         // In which case, we need to re-enter nested parsing again to handle the body of the else_if / else
-        Marker continuationMarker = builder.mark();
-        if (parseBlockStartStatement(builder) != null) {
-            continuationMarker.drop();
-            parseStatementsMaybeNestedInClosedBlock(builder);
-        } else {
-            continuationMarker.rollbackTo();
+        if (!blockStack.isEmpty()) {
+            Pair<String, Marker> pair = blockStack.peek();
+            if (pair.getFirst().equals("if")) {
+                Marker continuationMarker = builder.mark();
+                if (parseBlockStartStatement(builder) != null) {
+                    continuationMarker.drop();
+                    parseStatementsMaybeNestedInClosedBlock(builder);
+                } else {
+                    continuationMarker.rollbackTo();
+                }
+            } else {
+              //  pair = blockStack.pop();
+               // pair.getSecond().drop();
+            }
         }
     }
 

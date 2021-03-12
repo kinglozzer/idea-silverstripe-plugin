@@ -9,6 +9,7 @@ public final class SilverstripeTokenTypes {
     // Statement wrappers
     public static final IElementType SS_FRAGMENT = new OuterLanguageElementType("SS_FRAGMENT", SilverstripeLanguage.INSTANCE);
     public static final IElementType SS_STATEMENTS = new SilverstripeElementType("SS_STATEMENTS");
+    public static final IElementType SS_NESTED_STATEMENTS = new SilverstripeElementType("SS_NESTED_STATEMENTS");
 
     // Lookup statements
     public static final IElementType SS_LOOKUP = new SilverstripeElementType("SS_LOOKUP");

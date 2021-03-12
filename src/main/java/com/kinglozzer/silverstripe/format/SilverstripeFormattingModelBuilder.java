@@ -79,7 +79,7 @@ public class SilverstripeFormattingModelBuilder extends TemplateLanguageFormatti
                 return Indent.getNoneIndent();
             }
 
-            if (SilverstripePsiUtil.isNonRootStatementsElement(myNode.getPsi())) {
+            if (myNode.getElementType().equals(SilverstripeTokenTypes.SS_NESTED_STATEMENTS)) {
                 DataLanguageBlockWrapper foreignBlockParent = getForeignBlockParent(false);
                 if (foreignBlockParent == null) {
                     return Indent.getNormalIndent();
@@ -95,7 +95,7 @@ public class SilverstripeFormattingModelBuilder extends TemplateLanguageFormatti
                 return Indent.getNoneIndent();
             }
 
-            if (myNode.getTreeParent() != null && SilverstripePsiUtil.isNonRootStatementsElement(myNode.getTreeParent().getPsi())) {
+            if (myNode.getTreeParent() != null && myNode.getTreeParent().getElementType().equals(SilverstripeTokenTypes.SS_NESTED_STATEMENTS)) {
                 if (getParent() instanceof SilverstripeBlock && ((SilverstripeBlock) getParent()).getIndent() == Indent.getNoneIndent()) {
                     return Indent.getNormalIndent();
                 }
@@ -130,7 +130,7 @@ public class SilverstripeFormattingModelBuilder extends TemplateLanguageFormatti
                     || (
                     getParent() instanceof DataLanguageBlockWrapper
                         && (
-                        myNode.getElementType() != SilverstripeTokenTypes.SS_STATEMENTS
+                        (myNode.getElementType() != SilverstripeTokenTypes.SS_STATEMENTS && myNode.getElementType() != SilverstripeTokenTypes.SS_NESTED_STATEMENTS)
                             || newChildIndex != 0
                             || myNode.getTreeNext() instanceof PsiErrorElement
                     )
