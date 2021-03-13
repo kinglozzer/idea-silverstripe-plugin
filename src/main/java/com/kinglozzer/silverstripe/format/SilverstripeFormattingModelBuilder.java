@@ -15,7 +15,6 @@ import com.intellij.psi.templateLanguages.SimpleTemplateLanguageFormattingModelB
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlTag;
 import com.kinglozzer.silverstripe.parser.SilverstripeTokenTypes;
-import com.kinglozzer.silverstripe.util.SilverstripePsiUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -126,7 +125,7 @@ public class SilverstripeFormattingModelBuilder extends TemplateLanguageFormatti
         @Override
         public ChildAttributes getChildAttributes(int newChildIndex) {
             if (
-                myNode.getElementType() == SilverstripeTokenTypes.SS_BLOCK_STATEMENT
+                myNode.getElementType() == SilverstripeTokenTypes.SS_CLOSED_BLOCK_STATEMENT
                     || (
                     getParent() instanceof DataLanguageBlockWrapper
                         && (

@@ -17,12 +17,11 @@ public final class SilverstripeTokenTypes {
     public static final IElementType SS_LOOKUP_STEP_ARGS = new SilverstripeElementType("SS_LOOKUP_STEP_ARGS");
 
     // Block wrapper statements
-    // todo - rename to closed block statement
-    public static final IElementType SS_BLOCK_STATEMENT = new SilverstripeElementType("SS_BLOCK_STATEMENT");
+    public static final IElementType SS_CLOSED_BLOCK_STATEMENT = new SilverstripeElementType("SS_CLOSED_BLOCK_STATEMENT");
+    public static final IElementType SS_CLOSED_BLOCK_START_STATEMENT = new SilverstripeElementType("SS_CLOSED_BLOCK_START_STATEMENT");
+    public static final IElementType SS_CLOSED_BLOCK_END_STATEMENT = new SilverstripeElementType("SS_CLOSED_BLOCK_END_STATEMENT");
     public static final IElementType SS_BLOCK_START_STATEMENT = new SilverstripeElementType("SS_BLOCK_START_STATEMENT");
-    // todo - rename to open block statement, or just block statement?
-    public static final IElementType SS_BLOCK_SIMPLE_STATEMENT = new SilverstripeElementType("SS_BLOCK_SIMPLE_STATEMENT");
-    public static final IElementType SS_BLOCK_END_STATEMENT = new SilverstripeElementType("SS_BLOCK_END_STATEMENT");
+    public static final IElementType SS_OPEN_BLOCK_STATEMENT = new SilverstripeElementType("SS_OPEN_BLOCK_STATEMENT");
     public static final IElementType SS_UNFINISHED_BLOCK_STATEMENT = new SilverstripeElementType("SS_UNFINISHED_BLOCK_STATEMENT");
     public static final IElementType SS_BAD_BLOCK_STATEMENT = new SilverstripeElementType("SS_BAD_BLOCK_STATEMENT");
 

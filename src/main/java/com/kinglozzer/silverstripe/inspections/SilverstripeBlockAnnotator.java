@@ -18,9 +18,9 @@ public class SilverstripeBlockAnnotator implements Annotator {
         IElementType elementType = element.getNode().getElementType();
 
         // Warn about unclosed blocks (start block statements without a matching end block statement)
-        if (elementType.equals(SilverstripeTokenTypes.SS_BLOCK_START_STATEMENT) || elementType.equals(SilverstripeTokenTypes.SS_IF_STATEMENT)) {
+        if (elementType.equals(SilverstripeTokenTypes.SS_CLOSED_BLOCK_START_STATEMENT) || elementType.equals(SilverstripeTokenTypes.SS_IF_STATEMENT)) {
             IElementType parentBlockType = element.getParent().getNode().getElementType();
-            if (!parentBlockType.equals(SilverstripeTokenTypes.SS_BLOCK_STATEMENT)) {
+            if (!parentBlockType.equals(SilverstripeTokenTypes.SS_CLOSED_BLOCK_STATEMENT)) {
                 // Try to find out the block name, it could be a loop, with or if
                 TokenSet keywords = TokenSet.create(SilverstripeTokenTypes.SS_START_KEYWORD, SilverstripeTokenTypes.SS_IF_KEYWORD);
                 ASTNode[] blockTypeTokens = element.getNode().getChildren(keywords);
@@ -37,7 +37,7 @@ public class SilverstripeBlockAnnotator implements Annotator {
 
         // Warn about an if/else_if/with/loop block without a lookup provided
         if (
-            elementType.equals(SilverstripeTokenTypes.SS_BLOCK_START_STATEMENT)
+            elementType.equals(SilverstripeTokenTypes.SS_CLOSED_BLOCK_START_STATEMENT)
                 || elementType.equals(SilverstripeTokenTypes.SS_IF_STATEMENT)
                 || elementType.equals(SilverstripeTokenTypes.SS_ELSE_IF_STATEMENT)
         ) {
@@ -64,9 +64,9 @@ public class SilverstripeBlockAnnotator implements Annotator {
         }
 
         // Warn about an end block statement that doesn't have a matching start block statement
-        if (elementType.equals(SilverstripeTokenTypes.SS_BLOCK_END_STATEMENT)) {
+        if (elementType.equals(SilverstripeTokenTypes.SS_CLOSED_BLOCK_END_STATEMENT)) {
             PsiElement parent = element.getParent();
-            if (!parent.getNode().getElementType().equals(SilverstripeTokenTypes.SS_BLOCK_STATEMENT)) {
+            if (!parent.getNode().getElementType().equals(SilverstripeTokenTypes.SS_CLOSED_BLOCK_STATEMENT)) {
                 // Try to find out the block name, it could be a loop, with or if
                 TokenSet keywords = TokenSet.create(SilverstripeTokenTypes.SS_END_KEYWORD);
                 ASTNode[] blockTypeTokens = element.getNode().getChildren(keywords);
