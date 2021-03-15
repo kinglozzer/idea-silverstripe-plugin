@@ -23,8 +23,9 @@ public class SilverstripeIncludeAnnotator implements Annotator {
             ASTNode includeNameElement = element.getNode().findChildByType(SilverstripeTokenTypes.SS_INCLUDE_FILE);
             if (includeNameElement != null) {
                 String fileName = includeNameElement.getText()
-                    .replaceAll("\\\\", "/") // Replace \ with /
-                    .replaceAll("^/", "");    // Remove leading /
+                    .replaceAll("\\\\\\\\", "/") // Replace \\ with /
+                    .replaceAll("\\\\", "/")     // Replace \ with /
+                    .replaceAll("^/", "");       // Remove leading /
                 fileName = fileName + "." + SilverstripeFileType.DEFAULT_EXTENSION;
 
                 List<SilverstripePsiFile> files = SilverstripeFileUtil.findIncludeTemplate(element.getProject(), fileName);

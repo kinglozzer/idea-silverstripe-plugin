@@ -22,8 +22,9 @@ public class SilverstripeIncludeReference extends PsiReferenceBase<PsiElement> i
         super(element, textRange);
         SilverstripeIncludeImpl includeElement = (SilverstripeIncludeImpl) element;
         String name = includeElement.getName();
-        key = name.replaceAll("\\\\", "/")  // Replace \ with /
-            .replaceAll("^/", "");          // Remove leading /
+        key = name.replaceAll("\\\\\\\\", "/") // Replace \\ with /
+            .replaceAll("\\\\", "/")           // Replace \ with /
+            .replaceAll("^/", "");             // Remove leading /
     }
 
     @NotNull
