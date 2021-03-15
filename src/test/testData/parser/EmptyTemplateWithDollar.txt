@@ -1,0 +1,3 @@
+FILE
+  SilverstripePsiElementImpl([Ss] SS_STATEMENTS)
+    PsiElement(SS_TEXT)('$')

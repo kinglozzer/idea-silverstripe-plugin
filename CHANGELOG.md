@@ -10,6 +10,8 @@
 ### Removed
 
 ### Fixed
+- Issues with typing `$` or `>` in an empty template
+
 ## [0.2.0]
 ### Added
 - Support for renaming/moving include files (auto-update references)

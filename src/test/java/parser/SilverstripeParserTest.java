@@ -73,6 +73,10 @@ public class SilverstripeParserTest extends ParsingTestCase {
         doTest(true);
     }
 
+    public void testEmptyTemplateWithDollar() {
+        doTest(true);
+    }
+
     public void testSampleTemplate() {
         doTest(true);
     }

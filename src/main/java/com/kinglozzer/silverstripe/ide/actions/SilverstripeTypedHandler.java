@@ -76,22 +76,30 @@ public class SilverstripeTypedHandler extends TypedHandlerDelegate {
 
         if (c == '>') {
             int offset = editor.getCaretModel().getOffset();
-            String previousChar = editor.getDocument().getText(new TextRange(offset - 2, offset - 1));
-            // If the last two characters were "%>", attempt to auto-insert a matching closing block
-            if (previousChar.equals("%")) {
-                autoInsertCloseTag(project, offset, editor, file.getViewProvider());
-                adjustIndentation(project, offset, editor, file, file.getViewProvider());
+            if (offset >= 2) {
+                String previousChar = editor.getDocument().getText(new TextRange(offset - 2, offset - 1));
+                // If the last two characters were "%>", attempt to auto-insert a matching closing block
+                if (previousChar.equals("%")) {
+                    autoInsertCloseTag(project, offset, editor, file.getViewProvider());
+                    adjustIndentation(project, offset, editor, file, file.getViewProvider());
+                }
             }
         }
 
         if (c == '$') {
             int offset = editor.getCaretModel().getOffset();
-            String previousChar = editor.getDocument().getText(new TextRange(offset - 2, offset - 1));
-            // If the last two characters were "{$", we can close the braces
-            if (previousChar.equals("{")) {
-                String nextChar = editor.getDocument().getText(new TextRange(offset, offset + 1));
-                if (!nextChar.equals("}")) {
-                    editor.getDocument().insertString(offset, "}");
+            if (offset >= 2) {
+                String previousChar = editor.getDocument().getText(new TextRange(offset - 2, offset - 1));
+                // If the last two characters were "{$", we can close the braces
+                if (previousChar.equals("{")) {
+                    String nextChar = "";
+                    if (editor.getDocument().getTextLength() >= offset + 1) {
+                        nextChar = editor.getDocument().getText(new TextRange(offset, offset + 1));
+                    }
+
+                    if (!nextChar.equals("}")) {
+                        editor.getDocument().insertString(offset, "}");
+                    }
                 }
             }
         }

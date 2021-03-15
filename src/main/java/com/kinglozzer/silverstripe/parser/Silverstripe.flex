@@ -72,6 +72,7 @@ SS_TRANSLATION_IDENTIFIER= [a-zA-Z_\\]+\.[a-zA-Z_\\]+
 
 SS_TEXT= (([^<${\\]+) | (\\.) | (<[^%]) | (\$[^A-Za-z_]) | (\{[^\$]) | (\{\$[^A-Za-z_]))+
 
+%state SS_INJECTION
 %state SS_LOOKUP
 %state SS_LOOKUP_STEP
 %state SS_LOOKUP_ARGUMENTS
@@ -116,7 +117,7 @@ SS_TEXT= (([^<${\\]+) | (\\.) | (<[^%]) | (\$[^A-Za-z_]) | (\{[^\$]) | (\{\$[^A-
         yypushback(1);
     }
 
-    yypushstate(SS_LOOKUP);
+    yypushstate(SS_INJECTION);
     // Lex whitespace separately - the formatter needs this... no idea why
     if (yytext().toString().trim().length() == 0) {
         return TokenType.WHITE_SPACE;
@@ -273,10 +274,15 @@ SS_TEXT= (([^<${\\]+) | (\\.) | (<[^%]) | (\$[^A-Za-z_]) | (\{[^\$]) | (\{\$[^A-
     .                                   { yypushback(yylength()); yypopstate(); }
 }
 
-<SS_LOOKUP> {
-    "$ThemeDir"                         { return SilverstripeTokenTypes.SS_THEME_DIR; }
+<SS_INJECTION> {
+    {SS_LOOKUP}                         { yypushstate(SS_LOOKUP); return SilverstripeTokenTypes.SS_LOOKUP; }
     "{"                                 { return SilverstripeTokenTypes.SS_LEFT_BRACE; }
     "}"                                 { yypopstate(); return SilverstripeTokenTypes.SS_RIGHT_BRACE; }
+    .                                   { yypopstate(); return SilverstripeTokenTypes.SS_TEXT; }
+}
+
+<SS_LOOKUP> {
+    "$ThemeDir"                         { return SilverstripeTokenTypes.SS_THEME_DIR; }
     "."                                 { yypushstate(SS_LOOKUP_STEP); return SilverstripeTokenTypes.SS_DOT; }
     "("                                 { yypushstate(SS_LOOKUP_ARGUMENTS); return SilverstripeTokenTypes.SS_LEFT_PARENTHESIS; }
     {SS_LOOKUP}                         { return SilverstripeTokenTypes.SS_LOOKUP; }
