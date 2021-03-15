@@ -10,6 +10,8 @@
 ### Removed
 
 ### Fixed
+## [0.2.1]
+### Fixed
 - Issues with typing `$` or `>` in an empty template
 - Includes with numbers in file name were broken
 - Annotations for includes using double-backslash separators were broken
