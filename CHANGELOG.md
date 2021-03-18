@@ -1,6 +1,16 @@
 # Changelog
 
 ## [Unreleased]
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+## [0.2.2]
 ### Fixed
 - Regression in how $Variables without {} braces were handled
 
