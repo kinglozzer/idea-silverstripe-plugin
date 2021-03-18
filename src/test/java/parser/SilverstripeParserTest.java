@@ -80,4 +80,8 @@ public class SilverstripeParserTest extends ParsingTestCase {
     public void testSampleTemplate() {
         doTest(true);
     }
+
+    public void testIssue11() {
+        doTest(true);
+    }
 }

@@ -1,15 +1,9 @@
 # Changelog
 
 ## [Unreleased]
-### Added
-
-### Changed
-
-### Deprecated
-
-### Removed
-
 ### Fixed
+- Regression in how $Variables without {} braces were handled
+
 ## [0.2.1]
 ### Fixed
 - Issues with typing `$` or `>` in an empty template
