@@ -1,6 +1,16 @@
 # Changelog
 
 ## [Unreleased]
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+## [0.2.3]
 ### Fixed
 - Further issues with how $Variables without {} braces were handled
 
