@@ -276,10 +276,10 @@ SS_TEXT= (([^<${\\]+) | (\\.) | (<[^%]) | (\$[^A-Za-z_]) | (\{[^\$]) | (\{\$[^A-
 
 <SS_INJECTION> {
     {SS_LOOKUP}                         { yypushstate(SS_LOOKUP); return SilverstripeTokenTypes.SS_LOOKUP; }
+    "$"                                 { return SilverstripeTokenTypes.SS_TEXT; }
     "{"                                 { return SilverstripeTokenTypes.SS_LEFT_BRACE; }
     "}"                                 { yycleanstates(); return SilverstripeTokenTypes.SS_RIGHT_BRACE; }
-    {WHITE_SPACE}+                      { yycleanstates(); return TokenType.WHITE_SPACE; }
-    .                                   { yycleanstates(); return SilverstripeTokenTypes.SS_TEXT; }
+    .                                   { yypushback(yylength()); yycleanstates(); return SilverstripeTokenTypes.SS_TEXT; }
 }
 
 <SS_LOOKUP> {
