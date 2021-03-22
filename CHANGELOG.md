@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+## [0.3.0]
+### Added
 - Support for generic open & closed block statements (e.g. cacheinclude cache statements)
 
 ### Changed
@@ -12,7 +22,7 @@
 - Simplified comment lexing
 
 ### Fixed
-- Issue with background indexing of templates (https://github.com/kinglozzer/idea-silverstripe-plugin/issues/3)
+- Issue with background indexing of templates (#3)
 ## [0.2.3]
 ### Fixed
 - Further issues with how $Variables without {} braces were handled
