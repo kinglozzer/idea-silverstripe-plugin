@@ -2,14 +2,17 @@
 
 ## [Unreleased]
 ### Added
+- Support for generic open & closed block statements (e.g. cacheinclude cache statements)
 
 ### Changed
-
-### Deprecated
-
-### Removed
+- Significant internal refactor of parser logic
+- Renamed a number of token types to better indicate what they represent
+- Added a new token type for "nested" statements (inside closed blocks)
+- Removed unused token type for $ThemeDir variable
+- Simplified comment lexing
 
 ### Fixed
+- Issue with background indexing of templates (https://github.com/kinglozzer/idea-silverstripe-plugin/issues/3)
 ## [0.2.3]
 ### Fixed
 - Further issues with how $Variables without {} braces were handled
