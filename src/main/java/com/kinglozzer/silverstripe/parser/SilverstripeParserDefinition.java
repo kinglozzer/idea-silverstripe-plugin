@@ -11,7 +11,6 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.IFileElementType;
-import com.intellij.psi.tree.IStubFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import com.kinglozzer.silverstripe.SilverstripeLanguage;
 import com.kinglozzer.silverstripe.psi.SilverstripePsiFile;
@@ -21,12 +20,12 @@ import com.kinglozzer.silverstripe.psi.impl.SilverstripePsiElementImpl;
 import org.jetbrains.annotations.NotNull;
 
 public class SilverstripeParserDefinition implements ParserDefinition {
-    private static final IFileElementType FILE_NODE_TYPE = new IStubFileElementType<>("FILE", SilverstripeLanguage.INSTANCE);
+    private static final IFileElementType FILE_NODE_TYPE = new IFileElementType("FILE", SilverstripeLanguage.INSTANCE);
 
     @Override
     @NotNull
     public Lexer createLexer(Project project) {
-        return new SilverstripeLexer();
+        return new SilverstripeMergingLexer();
     }
 
     @Override

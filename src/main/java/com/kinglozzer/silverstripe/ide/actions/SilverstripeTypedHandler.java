@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 public class SilverstripeTypedHandler extends TypedHandlerDelegate {
     private static final TokenSet OPEN_BLOCK_START_STATEMENTS = TokenSet.create(
         SilverstripeTokenTypes.SS_IF_STATEMENT,
-        SilverstripeTokenTypes.SS_BLOCK_START_STATEMENT
+        SilverstripeTokenTypes.SS_CLOSED_BLOCK_START_STATEMENT
     );
 
     /**
@@ -55,7 +55,7 @@ public class SilverstripeTypedHandler extends TypedHandlerDelegate {
             IElementType nodeType = element.getNode().getElementType();
             return (nodeType == SilverstripeTokenTypes.SS_ELSE_IF_STATEMENT
                 || nodeType == SilverstripeTokenTypes.SS_ELSE_STATEMENT
-                || nodeType == SilverstripeTokenTypes.SS_BLOCK_END_STATEMENT);
+                || nodeType == SilverstripeTokenTypes.SS_CLOSED_BLOCK_END_STATEMENT);
         });
 
         // If the user just completed typing a closing / elseif / else block statement auto-adjust indentation for that line

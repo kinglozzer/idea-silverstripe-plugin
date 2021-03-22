@@ -38,7 +38,7 @@ public class SilverstripeFoldingBuilder implements FoldingBuilder, DumbAware {
 
         ASTNode node = psi.getNode();
         IElementType type = node.getElementType();
-        if (type == SilverstripeTokenTypes.SS_BLOCK_STATEMENT || type == SilverstripeTokenTypes.SS_COMMENT_STATEMENT) {
+        if (type == SilverstripeTokenTypes.SS_CLOSED_BLOCK_STATEMENT || type == SilverstripeTokenTypes.SS_COMMENT_STATEMENT) {
             ASTNode startNode = node.getFirstChildNode();
             ASTNode endNode = node.getLastChildNode();
             if (startNode == null || endNode == null) {

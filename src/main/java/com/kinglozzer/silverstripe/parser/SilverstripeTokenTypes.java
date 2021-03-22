@@ -9,6 +9,7 @@ public final class SilverstripeTokenTypes {
     // Statement wrappers
     public static final IElementType SS_FRAGMENT = new OuterLanguageElementType("SS_FRAGMENT", SilverstripeLanguage.INSTANCE);
     public static final IElementType SS_STATEMENTS = new SilverstripeElementType("SS_STATEMENTS");
+    public static final IElementType SS_NESTED_STATEMENTS = new SilverstripeElementType("SS_NESTED_STATEMENTS");
 
     // Lookup statements
     public static final IElementType SS_LOOKUP = new SilverstripeElementType("SS_LOOKUP");
@@ -16,10 +17,11 @@ public final class SilverstripeTokenTypes {
     public static final IElementType SS_LOOKUP_STEP_ARGS = new SilverstripeElementType("SS_LOOKUP_STEP_ARGS");
 
     // Block wrapper statements
-    public static final IElementType SS_BLOCK_STATEMENT = new SilverstripeElementType("SS_BLOCK_STATEMENT");
+    public static final IElementType SS_CLOSED_BLOCK_STATEMENT = new SilverstripeElementType("SS_CLOSED_BLOCK_STATEMENT");
+    public static final IElementType SS_CLOSED_BLOCK_START_STATEMENT = new SilverstripeElementType("SS_CLOSED_BLOCK_START_STATEMENT");
+    public static final IElementType SS_CLOSED_BLOCK_END_STATEMENT = new SilverstripeElementType("SS_CLOSED_BLOCK_END_STATEMENT");
     public static final IElementType SS_BLOCK_START_STATEMENT = new SilverstripeElementType("SS_BLOCK_START_STATEMENT");
-    public static final IElementType SS_BLOCK_SIMPLE_STATEMENT = new SilverstripeElementType("SS_BLOCK_SIMPLE_STATEMENT");
-    public static final IElementType SS_BLOCK_END_STATEMENT = new SilverstripeElementType("SS_BLOCK_END_STATEMENT");
+    public static final IElementType SS_OPEN_BLOCK_STATEMENT = new SilverstripeElementType("SS_OPEN_BLOCK_STATEMENT");
     public static final IElementType SS_UNFINISHED_BLOCK_STATEMENT = new SilverstripeElementType("SS_UNFINISHED_BLOCK_STATEMENT");
     public static final IElementType SS_BAD_BLOCK_STATEMENT = new SilverstripeElementType("SS_BAD_BLOCK_STATEMENT");
 
@@ -44,6 +46,7 @@ public final class SilverstripeTokenTypes {
     public static final IElementType SS_ELSE_IF_KEYWORD = new SilverstripeTokenType("SS_ELSE_IF_KEYWORD");
     public static final IElementType SS_ELSE_KEYWORD = new SilverstripeTokenType("SS_ELSE_KEYWORD");
     public static final IElementType SS_END_KEYWORD = new SilverstripeTokenType("SS_END_KEYWORD");
+    public static final IElementType SS_BLOCK_NAME = new SilverstripeTokenType("SS_BLOCK_NAME");
 
     // Closed block keyword tokens
     public static final IElementType SS_TRANSLATION_KEYWORD = new SilverstripeTokenType("SS_TRANSLATION_KEYWORD");
@@ -73,7 +76,6 @@ public final class SilverstripeTokenTypes {
     public static final IElementType SS_STRING = new SilverstripeTokenType("SS_STRING");
     public static final IElementType SS_NUMBER = new SilverstripeTokenType("SS_NUMBER");
     public static final IElementType SS_PRIMITIVE = new SilverstripeTokenType("SS_PRIMITIVE");
-    public static final IElementType SS_THEME_DIR = new SilverstripeTokenType("SS_THEME_DIR");
     public static final IElementType SS_DOT = new SilverstripeTokenType("SS_DOT");
     public static final IElementType SS_COMMA = new SilverstripeTokenType("SS_COMMA");
     public static final IElementType SS_IDENTIFIER = new SilverstripeTokenType("SS_IDENTIFIER");

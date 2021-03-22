@@ -88,8 +88,7 @@ public class SilverstripeSyntaxHighlighter extends SyntaxHighlighterBase {
         SilverstripeTokenTypes.SS_REQUIRE_CSS,
         SilverstripeTokenTypes.SS_REQUIRE_THEMED_CSS,
         SilverstripeTokenTypes.SS_REQUIRE_JS,
-        SilverstripeTokenTypes.SS_REQUIRE_THEMED_JS,
-        SilverstripeTokenTypes.SS_THEME_DIR
+        SilverstripeTokenTypes.SS_REQUIRE_THEMED_JS
     );
 
     private static final TokenSet KEYWORD_TOKENS = TokenSet.create(
@@ -103,6 +102,7 @@ public class SilverstripeSyntaxHighlighter extends SyntaxHighlighterBase {
         SilverstripeTokenTypes.SS_CACHED_KEYWORD,
         SilverstripeTokenTypes.SS_REQUIRE_KEYWORD,
         SilverstripeTokenTypes.SS_TRANSLATION_KEYWORD,
+        SilverstripeTokenTypes.SS_BLOCK_NAME,
         SilverstripeTokenTypes.SS_IS_KEYWORD
     );
 

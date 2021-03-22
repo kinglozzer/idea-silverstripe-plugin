@@ -19,8 +19,8 @@ public class SilverstripeEnterHandler extends EnterHandlerDelegateAdapter {
         SilverstripeTokenTypes.SS_IF_STATEMENT,
         SilverstripeTokenTypes.SS_ELSE_IF_STATEMENT,
         SilverstripeTokenTypes.SS_ELSE_STATEMENT,
-        SilverstripeTokenTypes.SS_BLOCK_START_STATEMENT,
-        SilverstripeTokenTypes.SS_BLOCK_END_STATEMENT
+        SilverstripeTokenTypes.SS_CLOSED_BLOCK_START_STATEMENT,
+        SilverstripeTokenTypes.SS_CLOSED_BLOCK_END_STATEMENT
     );
 
     private static boolean isBetweenSilverstripeBlocks(Editor editor, PsiFile file, int offset) {
