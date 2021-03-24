@@ -1,0 +1,11 @@
+FILE
+  SilverstripePsiElementImpl([Ss] SS_STATEMENTS)
+    SilverstripePsiElementImpl([Ss] SS_TRANSLATION_STATEMENT)
+      PsiElement(SS_BLOCK_START)('<%')
+      PsiElement(SS_TRANSLATION_KEYWORD)('t')
+      PsiWhiteSpace(' ')
+      PsiElement(SS_TRANSLATION_IDENTIFIER)('Test\Entity.ENTITY_1')
+      PsiWhiteSpace(' ')
+      PsiElement(SS_STRING)(''Some translation string'')
+      PsiWhiteSpace(' ')
+      PsiElement(SS_BLOCK_END)('%>')

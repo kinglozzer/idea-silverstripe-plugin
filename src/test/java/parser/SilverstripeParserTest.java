@@ -81,11 +81,15 @@ public class SilverstripeParserTest extends ParsingTestCase {
         doTest(true);
     }
 
+    public void testGenericBlocks() {
+        doTest(true);
+    }
+
     public void testIssue11() {
         doTest(true);
     }
 
-    public void testGenericBlocks() {
+    public void testIssue12() {
         doTest(true);
     }
 }
