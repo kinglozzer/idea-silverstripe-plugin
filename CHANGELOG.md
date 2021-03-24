@@ -10,6 +10,10 @@
 ### Removed
 
 ### Fixed
+## [0.3.1]
+### Fixed
+- Issues with numbers in translation keys (#12)
+
 ## [0.3.0]
 ### Added
 - Support for generic open & closed block statements (e.g. cacheinclude cache statements)
