@@ -10,6 +10,8 @@
 ### Removed
 
 ### Fixed
+- Intermittent issues indexing projects (#14)
+
 ## [0.3.1]
 ### Fixed
 - Issues with numbers in translation keys (#12)

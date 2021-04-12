@@ -4,7 +4,6 @@ import com.intellij.lang.ASTNode;
 import com.intellij.lang.folding.FoldingBuilder;
 import com.intellij.lang.folding.FoldingDescriptor;
 import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.SyntaxTraverser;
@@ -17,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SilverstripeFoldingBuilder implements FoldingBuilder, DumbAware {
+public class SilverstripeFoldingBuilder implements FoldingBuilder {
     private static boolean isSingleLine(PsiElement element, Document document) {
         TextRange range = element.getTextRange();
         return document.getLineNumber(range.getStartOffset()) == document.getLineNumber(range.getEndOffset());
