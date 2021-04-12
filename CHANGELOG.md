@@ -10,6 +10,16 @@
 ### Removed
 
 ### Fixed
+## [0.3.2]
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
 - Intermittent issues indexing projects (#14)
 
 ## [0.3.1]
