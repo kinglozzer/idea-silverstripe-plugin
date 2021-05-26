@@ -10,14 +10,12 @@
 ### Removed
 
 ### Fixed
-## [0.3.2]
-### Added
+## [0.3.3]
 
 ### Changed
+- Block stack in parser shouldn’t be static (#16)
 
-### Deprecated
-
-### Removed
+## [0.3.2]
 
 ### Fixed
 - Intermittent issues indexing projects (#14)

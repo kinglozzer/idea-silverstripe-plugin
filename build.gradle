@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'com.kinglozzer'
-version '0.3.2'
+version '0.3.3'
 
 sourceSets {
     main.java.srcDirs = ['src/main/java', 'src/main/gen']

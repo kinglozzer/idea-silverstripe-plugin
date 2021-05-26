@@ -16,11 +16,12 @@ import java.util.ArrayDeque;
 import static com.kinglozzer.silverstripe.parser.SilverstripeTokenTypes.*;
 
 public class SilverstripeParser implements PsiParser {
-    private static final ArrayDeque<Pair<String, Marker>> blockStack = new ArrayDeque<>();
+    private final ArrayDeque<Pair<String, Marker>> blockStack = new ArrayDeque<>();
 
     @Override
     @NotNull
     public ASTNode parse(@NotNull IElementType root, PsiBuilder builder) {
+        blockStack.clear();
         builder.setDebugMode(true);
 
         final Marker rootMarker = builder.mark();
