@@ -10,6 +10,10 @@
 ### Removed
 
 ### Fixed
+
+## [1.0.0]
+Initial stable release
+
 ## [0.3.3]
 
 ### Changed
