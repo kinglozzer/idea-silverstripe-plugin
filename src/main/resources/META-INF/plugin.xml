@@ -4,7 +4,46 @@
     <vendor email="kinglozzer@gmail.com">Loz Calver</vendor>
 
     <description><![CDATA[
-      <a href="https://www.silverstripe.org/">Silverstripe</a> template language support. WIP.
+<h1><a href="https://www.silverstripe.org/">Silverstripe</a> Template Language Support</h1>
+<p>This plugin adds Silverstripe template support to PHPStorm and other JetBrains IDEs.</p>
+<p><a href="https://github.com/kinglozzer/idea-silverstripe-plugin">More information</a> | <a href="https://github.com/kinglozzer/idea-silverstripe-plugin/issues">Issues</a> | <a href="https://github.com/sponsors/kinglozzer">Sponsor</a>
+<h2>Features</h2>
+<ul>
+    <li>Syntax highlighting for variables and block (if/else/loop/with) statements</li>
+    <li>Error highlighting for malformed/incorrect block statements</li>
+    <li>Auto-suggest/auto-completion of includes</li>
+    <li>Click-to-navigate to include files in <code>&lt;% include %&gt;</code> statements</li>
+    <li>Live templates for auto-completing blocks/tags and surrounding statements with if/else etc</li>
+</ul>
+<h3>Live templates</h3>
+<p>The keyboard shortcuts referenced below are for MacOS - to check for your operating system, review the <a href="https://www.jetbrains.com/help/idea/using-live-templates.html">live templates documentation.</a></p>
+<p>* Templates marked with an asterisk include placeholders for variables - simply type a variable, then press the return key to continue.</p>
+<h4>Completion</h4>
+<p>The following live templates are available for completion - simply type the abbreviation and hit the <code>TAB</code> key:</p>
+<ul>
+    <li><code>if</code>*</li>
+    <li><code>elseif</code>*</li>
+    <li><code>else</code></li>
+    <li><code>with</code>*</li>
+    <li><code>loop</code>*</li>
+    <li><code>cached</code>*</li>
+    <li><code>inc</code>* - auto-suggests template includes</li>
+    <li><code>reqcss</code>* - a <code>&lt;% require themedCSS() %&gt;</code> tag</li>
+    <li><code>reqjs</code>* - a <code>&lt;% require themedJavascript() %&gt;</code> tag</li>
+    <li><code>base</code> - a <code>&lt;% base_tag %&gt;</code> tag</li>
+    <li><code>_t</code>* - a translation tag</li>
+</ul>
+<h4>Surround</h4>
+<p>The following live templates are available for surrounding existing code. Highlight a portion of your template, then press <code>⌥⌘J</code> to bring up the templates menu and select from the following:</p>
+<ul>
+    <li><code>if</code>* - surround with an if statement</li>
+    <li><code>with</code>* - surround with a "with" statement</li>
+    <li><code>loop</code>* - surround with a loop</li>
+    <li><code>cached</code>* - surround with a partial caching block</li>
+</ul>
+<h2>Credits</h2>
+<p>I must send a huge thank you to <a href="https://github.com/MarcusDalgren">Marcus Dalgren</a> for his work on the <a href="https://github.com/raket/idea-silverstripe">original Silverstripe plugin</a>. It has served Silverstripe developers perfectly for a number of years before it finally succumbed to the effects of many platform updates. It served as the inspiration for almost all the features in this version, and offered an excellent starting point for the JFlex lexer.</p>
+<p>I also have to thank JetBrains for their open-source <a href="https://github.com/JetBrains/intellij-plugins">IntelliJ plugins</a>, which have been an invaluable source of information on how to implement certain features.</p>
     ]]>
     </description>
 

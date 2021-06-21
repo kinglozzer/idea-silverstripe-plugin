@@ -1,19 +1,19 @@
-# Idea Silverstripe Plugin
-
-## ⚠️ Work in progress ⚠️
+# Silverstripe Template Language Support
 
 This plugin adds Silverstripe template support to PHPStorm and other JetBrains IDEs.
 
 ## Platform requirements
 
-This plugin requires PHPStorm (or other IDEA-base IDE) to be running version 2020.3 or greater.
+This plugin requires PHPStorm (or other IDEA-based IDE) to be running version 2020.3 or greater.
 
 ## Installation
 
-Until the plugin is ready for a stable release and is available on the JetBrains plugin marketplace, it must be
-installed from disk:
+It’s recommended to install the plugin via the JetBrains marketplace. Just search for “Silverstripe Template Language Support”, or use the following link:
 
-- Disable the existing Silverstripe plugin if you have it installed
+[View on JetBrains marketplace](https://plugins.jetbrains.com/plugin/17014-silverstripe-template-language-support)
+
+Alternatively, the plugin can be installed from disk:
+
 - Download the latest release from [the releases page](https://github.com/kinglozzer/idea-silverstripe-plugin/releases)
 - Open the plugins menu in your IDE
 - Open the options menu (`⋮` in PHPStorm)
