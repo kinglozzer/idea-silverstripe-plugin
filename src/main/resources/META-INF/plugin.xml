@@ -60,13 +60,16 @@
         <internalFileTemplate name="Silverstripe Template"/>
         <fileType name="Silverstripe" implementationClass="com.kinglozzer.silverstripe.SilverstripeFileType" fieldName="INSTANCE" language="Silverstripe" extensions="ss"/>
 
+        <braceMatcher filetype="Silverstripe" implementationClass="com.kinglozzer.silverstripe.ide.braces.SilverstripeBraceMatcher"/>
+
         <lang.fileViewProviderFactory language="Silverstripe" implementationClass="com.kinglozzer.silverstripe.files.SilverstripeFileViewProviderFactory"/>
         <lang.formatter language="Silverstripe" implementationClass="com.kinglozzer.silverstripe.format.SilverstripeFormattingModelBuilder"/>
-        <lang.braceMatcher language="Silverstripe" implementationClass="com.kinglozzer.silverstripe.ide.braces.SilverstripeBraceMatcher"/>
         <lang.foldingBuilder language="Silverstripe" implementationClass="com.kinglozzer.silverstripe.ide.folding.SilverstripeFoldingBuilder"/>
         <lang.commenter language="Silverstripe" implementationClass="com.kinglozzer.silverstripe.ide.comments.SilverstripeCommenter"/>
         <lang.parserDefinition language="Silverstripe" implementationClass="com.kinglozzer.silverstripe.parser.SilverstripeParserDefinition"/>
         <lang.syntaxHighlighterFactory language="Silverstripe" implementationClass="com.kinglozzer.silverstripe.ide.highlighting.SilverstripeSyntaxHighlighterFactory"/>
+
+        <highlightingPassFactory implementation="com.kinglozzer.silverstripe.ide.highlighting.SilverstripeTagTreeHighlightingPassFactory"/>
 
         <enterHandlerDelegate implementation="com.kinglozzer.silverstripe.ide.actions.SilverstripeEnterHandler"/>
         <typedHandler implementation="com.kinglozzer.silverstripe.ide.actions.SilverstripeTypedHandler"/>
