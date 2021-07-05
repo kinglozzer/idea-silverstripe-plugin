@@ -4,6 +4,7 @@
 ### Added
 
 ### Changed
+- Improved `BraceMatcher` to highlight start / end of tags as well as braces/parentheses (#18)
 
 ### Deprecated
 
