@@ -68,7 +68,7 @@ SS_COMMENT_START= <%--
 SS_COMMENT_END= --%>
 SS_TRANSLATION_START= <%t
 SS_STRING_NO_QUOTES=[^\"\'\)]+
-SS_TRANSLATION_IDENTIFIER= [a-zA-Z_\\]+([a-zA-Z0-9_\\])*\.([a-zA-Z0-9_\\])+
+SS_TRANSLATION_IDENTIFIER= [a-zA-Z_\\]+([a-zA-Z0-9_\\])*(\.([a-zA-Z0-9_\\])+)+
 
 SS_TEXT= (([^<${\\]+) | (\\.) | (<[^%]) | (\$[^A-Za-z_]) | (\{[^\$]) | (\{\$[^A-Za-z_]))+
 

@@ -11,6 +11,7 @@
 ### Removed
 
 ### Fixed
+- Slightly more permissive lexing of translation entities (#20)
 
 ## [1.0.0]
 Initial stable release
