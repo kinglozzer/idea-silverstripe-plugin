@@ -4,11 +4,16 @@
 ### Added
 
 ### Changed
-- Improved `BraceMatcher` to highlight start / end of tags as well as braces/parentheses (#18)
 
 ### Deprecated
 
 ### Removed
+
+### Fixed
+
+## [1.0.1]
+### Changed
+- Improved `BraceMatcher` to highlight start / end of tags as well as braces/parentheses (#18)
 
 ### Fixed
 - Slightly more permissive lexing of translation entities (#20)
@@ -17,12 +22,10 @@
 Initial stable release
 
 ## [0.3.3]
-
 ### Changed
 - Block stack in parser shouldn’t be static (#16)
 
 ## [0.3.2]
-
 ### Fixed
 - Intermittent issues indexing projects (#14)
 
@@ -43,6 +46,7 @@ Initial stable release
 
 ### Fixed
 - Issue with background indexing of templates (#3)
+
 ## [0.2.3]
 ### Fixed
 - Further issues with how $Variables without {} braces were handled
@@ -71,11 +75,10 @@ Initial stable release
 
 ### Fixed
 - Issues with include statements/references triggering exceptions
-## [0.0.2]
 
+## [0.0.2]
 ### Fixed
 - Some include files wouldn’t be recognised as valid in SS4 projects
 
 ## [0.0.1]
-
 - Initial release
