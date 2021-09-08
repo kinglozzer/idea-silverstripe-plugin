@@ -1,5 +1,6 @@
 package com.kinglozzer.silverstripe.ide.templates;
 
+import com.intellij.codeInsight.template.TemplateActionContext;
 import com.intellij.codeInsight.template.TemplateContextType;
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
 import com.intellij.psi.PsiElement;
@@ -16,12 +17,13 @@ public class SilverstripeHTMLContextType extends TemplateContextType {
     }
 
     @Override
-    public boolean isInContext(@NotNull PsiFile file, int offset) {
+    public boolean isInContext(@NotNull TemplateActionContext templateActionContext) {
+        PsiFile file = templateActionContext.getFile();
         if (!SilverstripeLanguage.INSTANCE.is(file.getLanguage())) {
             return false;
         }
 
-        PsiElement element = file.findElementAt(offset);
+        PsiElement element = file.findElementAt(templateActionContext.getStartOffset());
         if (element == null) {
             return false;
         }

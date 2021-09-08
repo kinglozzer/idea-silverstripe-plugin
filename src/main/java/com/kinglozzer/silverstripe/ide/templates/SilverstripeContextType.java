@@ -1,10 +1,8 @@
 package com.kinglozzer.silverstripe.ide.templates;
 
+import com.intellij.codeInsight.template.TemplateActionContext;
 import com.intellij.codeInsight.template.TemplateContextType;
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.xml.XmlTokenType;
 import com.kinglozzer.silverstripe.SilverstripeLanguage;
 import com.kinglozzer.silverstripe.ide.highlighting.SilverstripeSyntaxHighlighter;
 import org.jetbrains.annotations.NotNull;
@@ -16,8 +14,8 @@ public class SilverstripeContextType extends TemplateContextType {
     }
 
     @Override
-    public boolean isInContext(@NotNull PsiFile file, int offset) {
-        return SilverstripeLanguage.INSTANCE.is(file.getLanguage());
+    public boolean isInContext(@NotNull TemplateActionContext templateActionContext) {
+        return SilverstripeLanguage.INSTANCE.is(templateActionContext.getFile().getLanguage());
     }
 
     @Nullable
