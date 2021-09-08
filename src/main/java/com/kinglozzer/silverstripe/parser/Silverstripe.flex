@@ -44,7 +44,13 @@ import com.intellij.util.containers.Stack;
 
 CRLF= (\n|\r|\r\n)
 WHITE_SPACE= [\ \t]
-NUMBER=[0-9]+
+SIGN= [+-]
+FLOAT= [0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?
+HEXADECIMAL= 0[xX][0-9a-fA-F]+
+OCTAL= 0[0-7]+
+BINARY= 0[bB][01]+
+DECIMAL= 0 | [1-9][0-9]*
+INTEGER_OR_FLOAT= ( {SIGN} )? ( {HEXADECIMAL} | {BINARY} | {FLOAT} | {OCTAL} | {DECIMAL} )
 SS_LOOKUP= \$[a-zA-Z_]+([a-zA-Z0-9_])*
 SS_IDENTIFIER= [a-zA-Z_]+([a-zA-Z0-9_])*
 SS_BLOCK_START= <%
@@ -173,7 +179,7 @@ SS_TEXT= (([^<${\\]+) | (\\.) | (<[^%]) | (\$[^A-Za-z_]) | (\{[^\$]) | (\{\$[^A-
 
 <SS_NAMED_VAR> {
     "="                                 { return SilverstripeTokenTypes.SS_EQUALS; }
-    {NUMBER}                            { return SilverstripeTokenTypes.SS_NUMBER; }
+    {INTEGER_OR_FLOAT}                  { return SilverstripeTokenTypes.SS_NUMBER; }
     {SS_PRIMITIVE}                      { return SilverstripeTokenTypes.SS_PRIMITIVE; }
     {SS_STRING}                         { return SilverstripeTokenTypes.SS_STRING; }
     {SS_LOOKUP}                         { yypushstate(SS_LOOKUP); return SilverstripeTokenTypes.SS_LOOKUP; }
@@ -203,7 +209,7 @@ SS_TEXT= (([^<${\\]+) | (\\.) | (<[^%]) | (\$[^A-Za-z_]) | (\{[^\$]) | (\{\$[^A-
 
 <SS_IF_STATEMENT> {
     {SS_COMPARISON_OPERATOR}            { return SilverstripeTokenTypes.SS_COMPARISON_OPERATOR; }
-    {NUMBER}                            { return SilverstripeTokenTypes.SS_NUMBER; }
+    {INTEGER_OR_FLOAT}                  { return SilverstripeTokenTypes.SS_NUMBER; }
     {SS_AND_OR_OPERATOR}                { return SilverstripeTokenTypes.SS_AND_OR_OPERATOR; }
     {SS_STRING}                         { return SilverstripeTokenTypes.SS_STRING; }
     {SS_IDENTIFIER}                     { yypushstate(SS_LOOKUP); return SilverstripeTokenTypes.SS_LOOKUP; }
@@ -302,7 +308,7 @@ SS_TEXT= (([^<${\\]+) | (\\.) | (<[^%]) | (\$[^A-Za-z_]) | (\{[^\$]) | (\{\$[^A-
     {SS_IDENTIFIER}                     { yypushstate(SS_LOOKUP); return SilverstripeTokenTypes.SS_LOOKUP; }
     {SS_LOOKUP}                         { yypushstate(SS_LOOKUP); return SilverstripeTokenTypes.SS_LOOKUP; }
     {SS_STRING}                         { return SilverstripeTokenTypes.SS_STRING; }
-    {NUMBER}                            { return SilverstripeTokenTypes.SS_NUMBER; }
+    {INTEGER_OR_FLOAT}                  { return SilverstripeTokenTypes.SS_NUMBER; }
     {WHITE_SPACE}+                      { return TokenType.WHITE_SPACE; }
     {CRLF}+                             { yypushback(yylength()); yypopstate(); }
     .                                   { yypushback(yylength()); yypopstate(); }

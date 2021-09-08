@@ -92,4 +92,8 @@ public class SilverstripeParserTest extends ParsingTestCase {
     public void testIssue12() {
         doTest(true);
     }
+
+    public void testIssue21() {
+        doTest(true);
+    }
 }
