@@ -6,6 +6,7 @@
 ### Changed
 - Replaced usage of IntelliJ internal API
 - Replaced usage of deprecated APIs
+- Removed usage of experimental APIs
 
 ### Deprecated
 

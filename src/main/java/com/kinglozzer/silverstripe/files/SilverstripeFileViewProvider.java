@@ -100,23 +100,13 @@ public class SilverstripeFileViewProvider extends MultiplePsiFilesPerDocumentFil
 
         if (lang.is(getTemplateDataLanguage())) {
             PsiFile file = parserDefinition.createFile(this);
-            IElementType type = getContentElementType(lang);
-            if (type != null) {
-                ((PsiFileImpl) file).setContentElementType(type);
-            }
+            IElementType type = getTemplateDataElementType(getBaseLanguage());
+            ((PsiFileImpl) file).setContentElementType(type);
             return file;
         } else if (lang.isKindOf(getBaseLanguage())) {
             return parserDefinition.createFile(this);
         }
 
-        return null;
-    }
-
-    @Override
-    public @Nullable IElementType getContentElementType(@NotNull Language language) {
-        if (language.is(getTemplateDataLanguage())) {
-            return getTemplateDataElementType(getBaseLanguage());
-        }
         return null;
     }
 
