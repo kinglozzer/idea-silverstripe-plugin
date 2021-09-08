@@ -10,6 +10,9 @@
 ### Removed
 
 ### Fixed
+
+## [1.0.2]
+### Fixed
 - Fixed issue with parsing of float arguments in lookups (#21)
 
 ## [1.0.1]
