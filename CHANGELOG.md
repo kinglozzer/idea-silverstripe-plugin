@@ -4,6 +4,7 @@
 ### Added
 
 ### Changed
+- Replaced usage of IntelliJ internal API
 
 ### Deprecated
 

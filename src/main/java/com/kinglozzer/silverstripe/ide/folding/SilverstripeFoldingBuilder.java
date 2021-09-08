@@ -46,20 +46,21 @@ public class SilverstripeFoldingBuilder implements FoldingBuilder {
 
             int startOffset = startNode.getTextRange().getEndOffset();
             int endOffset = endNode.getTextRange().getStartOffset();
-
-            JBIterable<PsiElement> elseIfs = SyntaxTraverser.psiTraverser().children(psi).filter(element -> {
+            for (PsiElement element : psi.getChildren()) {
                 ASTNode elementNode = element.getNode();
                 if (elementNode == null) {
-                    return false;
+                    continue;
                 }
 
+                // We only want elseif / else nodes here
                 IElementType elType = elementNode.getElementType();
-                return elType == SilverstripeTokenTypes.SS_ELSE_IF_STATEMENT || elType == SilverstripeTokenTypes.SS_ELSE_STATEMENT;
-            });
-            for (PsiElement elseIf : elseIfs) {
-                node = elseIf.getNode();
-                ASTNode firstChild = node.getFirstChildNode();
-                ASTNode lastChild = node.getLastChildNode();
+                if (elType != SilverstripeTokenTypes.SS_ELSE_IF_STATEMENT && elType != SilverstripeTokenTypes.SS_ELSE_STATEMENT) {
+                    continue;
+                }
+
+                node = elementNode;
+                ASTNode firstChild = elementNode.getFirstChildNode();
+                ASTNode lastChild = elementNode.getLastChildNode();
                 if (firstChild == null || lastChild == null) {
                     continue;
                 }
@@ -68,7 +69,7 @@ public class SilverstripeFoldingBuilder implements FoldingBuilder {
                 int thisEndOffset = lastChild.getTextRange().getEndOffset();
                 if (thisStartOffset > startOffset && thisEndOffset < endOffset) {
                     TextRange range = new TextRange(startOffset, thisStartOffset);
-                    descriptors.add(new FoldingDescriptor(node, range));
+                    descriptors.add(new FoldingDescriptor(elementNode, range));
 
                     startOffset = thisEndOffset;
                 }
