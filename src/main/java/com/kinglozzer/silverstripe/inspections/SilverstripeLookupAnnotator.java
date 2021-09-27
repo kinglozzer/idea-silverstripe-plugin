@@ -32,8 +32,10 @@ public class SilverstripeLookupAnnotator implements Annotator {
                     }
 
                     if (!hasArgs) {
-                        builder.withFix(new QuoteStringFix()).create();
+                        builder = builder.withFix(new QuoteStringFix());
                     }
+
+                    builder.create();
                 }
             }
         }
