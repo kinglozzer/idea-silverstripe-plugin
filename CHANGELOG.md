@@ -4,14 +4,19 @@
 ### Added
 
 ### Changed
-- More flexible <% require %> syntax
-- Replaced usage of IntelliJ internal API
-- Replaced usage of deprecated APIs
-- Removed usage of experimental APIs
 
 ### Deprecated
 
 ### Removed
+
+### Fixed
+
+## [1.0.3]
+### Changed
+- More flexible <% require %> syntax
+- Replaced usage of IntelliJ internal API
+- Replaced usage of deprecated APIs
+- Removed usage of experimental APIs
 
 ### Fixed
 - Issue with lookups annotations
