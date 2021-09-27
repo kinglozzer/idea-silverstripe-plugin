@@ -4,6 +4,7 @@
 ### Added
 
 ### Changed
+- More flexible <% require %> syntax
 - Replaced usage of IntelliJ internal API
 - Replaced usage of deprecated APIs
 - Removed usage of experimental APIs
@@ -13,6 +14,7 @@
 ### Removed
 
 ### Fixed
+- Issue with lookups annotations
 
 ## [1.0.2]
 ### Fixed
