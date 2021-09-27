@@ -66,12 +66,6 @@ public final class SilverstripeTokenTypes {
     // Include tokens
     public static final IElementType SS_INCLUDE_FILE = new SilverstripeTokenType("SS_INCLUDE_FILE");
 
-    // Require tokens
-    public static final IElementType SS_REQUIRE_CSS = new SilverstripeTokenType("SS_REQUIRE_CSS");
-    public static final IElementType SS_REQUIRE_THEMED_CSS = new SilverstripeTokenType("SS_REQUIRE_THEMED_CSS");
-    public static final IElementType SS_REQUIRE_JS = new SilverstripeTokenType("SS_REQUIRE_JS");
-    public static final IElementType SS_REQUIRE_THEMED_JS = new SilverstripeTokenType("SS_REQUIRE_THEMED_JS");
-
     // Special text tokens
     public static final IElementType SS_STRING = new SilverstripeTokenType("SS_STRING");
     public static final IElementType SS_NUMBER = new SilverstripeTokenType("SS_NUMBER");

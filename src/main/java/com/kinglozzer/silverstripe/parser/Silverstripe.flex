@@ -90,7 +90,6 @@ SS_TEXT= (([^<${\\]+) | (\\.) | (<[^%]) | (\$[^A-Za-z_]) | (\{[^\$]) | (\{\$[^A-
 %state SS_TRANSLATION_STATEMENT
 %state SS_CACHED_STATEMENT
 %state SS_REQUIRE_STATEMENT
-%state SS_REQUIRE_CONTENT
 %state SS_INCLUDE_VARS
 %state SS_NAMED_VAR
 %state SS_COMMENT
@@ -188,20 +187,7 @@ SS_TEXT= (([^<${\\]+) | (\\.) | (<[^%]) | (\$[^A-Za-z_]) | (\{[^\$]) | (\{\$[^A-
 }
 
 <SS_REQUIRE_STATEMENT> {
-    "css"                               { return SilverstripeTokenTypes.SS_REQUIRE_CSS; }
-    "javascript"                        { return SilverstripeTokenTypes.SS_REQUIRE_JS; }
-    "themedCSS"                         { return SilverstripeTokenTypes.SS_REQUIRE_THEMED_CSS; }
-    "themedJavascript"                  { return SilverstripeTokenTypes.SS_REQUIRE_THEMED_JS; }
-    "("                                 { yypushstate(SS_REQUIRE_CONTENT); return SilverstripeTokenTypes.SS_LEFT_PARENTHESIS; }
-    {WHITE_SPACE}+                      { return TokenType.WHITE_SPACE; }
-    {CRLF}+                             { yypushback(yylength()); yypopstate(); }
-    .                                   { yypushback(yylength()); yypopstate(); }
-}
-
-<SS_REQUIRE_CONTENT> {
-    ")"                                 { yypopstate(); return SilverstripeTokenTypes.SS_RIGHT_PARENTHESIS; }
-    {SS_STRING}                         { return SilverstripeTokenTypes.SS_STRING; }
-    {SS_STRING_NO_QUOTES}               { return SilverstripeTokenTypes.SS_STRING; }
+    {SS_IDENTIFIER}                     { yypushstate(SS_LOOKUP); return SilverstripeTokenTypes.SS_LOOKUP; }
     {WHITE_SPACE}+                      { return TokenType.WHITE_SPACE; }
     {CRLF}+                             { yypushback(yylength()); yypopstate(); }
     .                                   { yypushback(yylength()); yypopstate(); }

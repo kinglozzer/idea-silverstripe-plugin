@@ -18,6 +18,21 @@ public class SilverstripeLookupAnnotator implements Annotator {
             if (varValue != null && !varValue.startsWith("$")) {
                 // We only want to warn if this is the first step in the lookup chain
                 if (element.getPrevSibling() == null) {
+                    PsiElement lookup = element.getParent();
+                    if (lookup == null) {
+                        return;
+                    }
+
+                    // If this is the first lookup inside a require statement, ignore it - "css" in <% require css() %>
+                    // is treated as a non-dollar-prefixed lookup
+                    PsiElement context = lookup.getParent();
+                    if (context != null
+                        && context.getNode() != null
+                        && context.getNode().getElementType() == SilverstripeTokenTypes.SS_REQUIRE_STATEMENT
+                    ) {
+                        return;
+                    }
+
                     AnnotationBuilder builder = holder.newAnnotation(HighlightSeverity.WARNING,
                         SilverstripeBundle.message("ss.inspection.unquoted.string"))
                         .withFix(new AddDollarSignFix());

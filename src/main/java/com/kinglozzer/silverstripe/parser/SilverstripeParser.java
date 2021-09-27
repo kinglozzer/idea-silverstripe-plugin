@@ -195,14 +195,6 @@ public class SilverstripeParser implements PsiParser {
             return true;
         }
 
-        if (tokenType == SS_REQUIRE_CSS || tokenType == SS_REQUIRE_JS || tokenType == SS_REQUIRE_THEMED_CSS || tokenType == SS_REQUIRE_THEMED_JS) {
-            consumeToken(builder, tokenType);
-            if (builder.getTokenType() == SS_LEFT_PARENTHESIS) {
-                parseLookupStepArguments(builder);
-            }
-            return true;
-        }
-
         if (tokenType == SS_AND_OR_OPERATOR || tokenType == SS_COMPARISON_OPERATOR) {
             builder.advanceLexer();
             return true;

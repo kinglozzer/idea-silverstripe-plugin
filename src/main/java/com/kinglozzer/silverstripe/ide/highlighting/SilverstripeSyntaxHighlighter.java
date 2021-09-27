@@ -84,11 +84,7 @@ public class SilverstripeSyntaxHighlighter extends SyntaxHighlighterBase {
     private static final TokenSet IDENTIFIER_TOKENS = TokenSet.create(
         SilverstripeTokenTypes.SS_IDENTIFIER,
         SilverstripeTokenTypes.SS_INCLUDE_FILE,
-        SilverstripeTokenTypes.SS_TRANSLATION_IDENTIFIER,
-        SilverstripeTokenTypes.SS_REQUIRE_CSS,
-        SilverstripeTokenTypes.SS_REQUIRE_THEMED_CSS,
-        SilverstripeTokenTypes.SS_REQUIRE_JS,
-        SilverstripeTokenTypes.SS_REQUIRE_THEMED_JS
+        SilverstripeTokenTypes.SS_TRANSLATION_IDENTIFIER
     );
 
     private static final TokenSet KEYWORD_TOKENS = TokenSet.create(
