@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class SilverstripeContextType extends TemplateContextType {
     protected SilverstripeContextType() {
-        super("Silverstripe", "Silverstripe");
+        super("Silverstripe");
     }
 
     @Override

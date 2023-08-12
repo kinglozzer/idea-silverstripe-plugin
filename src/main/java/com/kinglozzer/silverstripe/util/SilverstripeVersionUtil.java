@@ -2,12 +2,15 @@ package com.kinglozzer.silverstripe.util;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectRootManager;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFileSystemItem;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.util.CachedValueProvider;
 import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.util.text.VersionComparatorUtil;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Collection;
 
 import static com.intellij.psi.search.GlobalSearchScope.allScope;
 
@@ -33,13 +36,13 @@ public final class SilverstripeVersionUtil {
     private static String computeSilverstripeVersion(@NotNull Project project) {
         String version = "3";
 
-        PsiFileSystemItem[] candidates = FilenameIndex.getFilesByName(project, "framework", allScope(project), true);
-        for (PsiFileSystemItem candidate : candidates) {
+        Collection<VirtualFile> candidates = FilenameIndex.getVirtualFilesByName("framework", allScope(project));
+        for (VirtualFile candidate : candidates) {
             if (!candidate.isDirectory()) {
                 continue;
             }
 
-            PsiFileSystemItem parent = candidate.getParent();
+            VirtualFile parent = candidate.getParent();
             if (parent != null && parent.isDirectory() && parent.getName().equals("silverstripe")) {
                 parent = parent.getParent();
                 if (parent != null && parent.isDirectory() && parent.getName().equals("vendor")) {
